@@ -4,16 +4,17 @@ import VoiceOrb from '../components/deckarcAI/VoiceOrb';
 import { useAuth } from '../contexts/AuthContext';
 import {
   isListeningSupported,
-  isSpeakingSupported,
   startListening,
   stopListening,
   speak,
   stopSpeaking,
 } from '../lib/speech';
-import { processAIQuery } from '../lib/aiBrain';
+import { sendAIMessage, AIConversationTurn } from '../lib/aiBrain';
+import type { Page } from '../components/Layout';
 
 export interface DeckarcAIPageProps {
   onBack: () => void;
+  onNavigate?: (page: Page) => void;
 }
 
 export interface LogEntry {
@@ -67,15 +68,16 @@ const TELEMETRY_ITEMS = [
   'Pending Tasks',
 ];
 
-export const DeckarcAIPage: React.FC<DeckarcAIPageProps> = ({ onBack }) => {
+export const DeckarcAIPage: React.FC<DeckarcAIPageProps> = ({ onBack, onNavigate }) => {
   const { profile } = useAuth();
-  const [status, setStatus] = useState<'idle' | 'listening' | 'speaking'>('idle');
+  const [status, setStatus] = useState<'idle' | 'listening' | 'thinking' | 'speaking'>('idle');
   const [interimTranscript, setInterimTranscript] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [inputText, setInputText] = useState<string>('');
   const [logEntries, setLogEntries] = useState<LogEntry[]>([]);
 
   const logEndRef = useRef<HTMLDivElement | null>(null);
+  const conversationRef = useRef<AIConversationTurn[]>([]);
 
   // Clean up speech recognition & synthesis on unmount
   useEffect(() => {
@@ -106,23 +108,30 @@ export const DeckarcAIPage: React.FC<DeckarcAIPageProps> = ({ onBack }) => {
 
     setInterimTranscript('');
     setErrorMessage(null);
+    setLogEntries((prev) => [...prev, userEntry]);
+    setStatus('thinking');
 
-    // Process prompt via AI Brain (Project Pulse capability dispatcher)
-    const replyText = await processAIQuery(userText, { profile });
+    // Reason about the request via DECKARC AI (LLM + tool-calling agent),
+    // carrying the running conversation forward for multi-turn context.
+    const { reply, history } = await sendAIMessage(conversationRef.current, userText, {
+      profile,
+      navigate: onNavigate,
+    });
+    conversationRef.current = history;
 
     const aiEntry: LogEntry = {
       id: aiMsgId,
       sender: 'DECKARC AI',
-      text: replyText,
+      text: reply,
       timestamp: timeStr,
     };
 
     // Update interaction log
-    setLogEntries((prev) => [...prev, userEntry, aiEntry]);
+    setLogEntries((prev) => [...prev, aiEntry]);
 
-    // Speak echo reply
+    // Speak reply
     setStatus('speaking');
-    speak(replyText, {
+    speak(reply, {
       onStart: () => setStatus('speaking'),
       onEnd: () => setStatus('idle'),
       onError: (err) => {
@@ -292,7 +301,7 @@ export const DeckarcAIPage: React.FC<DeckarcAIPageProps> = ({ onBack }) => {
 
             {/* Voice Orb */}
             <div className="my-2 relative z-10 flex items-center justify-center">
-              <VoiceOrb status={status} />
+              <VoiceOrb status={status === 'thinking' ? 'speaking' : status} />
             </div>
 
             {/* Status Info Lines */}
@@ -300,7 +309,7 @@ export const DeckarcAIPage: React.FC<DeckarcAIPageProps> = ({ onBack }) => {
               <div className="flex items-center justify-center gap-4 text-cyan-300/90 flex-wrap">
                 <span>AGENCY LOCATION: <strong className="text-cyan-200">CLOUD</strong></span>
                 <span className="text-cyan-700">|</span>
-                <span>STATUS: <strong className={status === 'listening' ? 'text-cyan-400 animate-pulse' : status === 'speaking' ? 'text-teal-400 animate-pulse' : 'text-emerald-400'}>{status.toUpperCase()}</strong></span>
+                <span>STATUS: <strong className={status === 'listening' ? 'text-cyan-400 animate-pulse' : status === 'speaking' ? 'text-teal-400 animate-pulse' : status === 'thinking' ? 'text-amber-400 animate-pulse' : 'text-emerald-400'}>{status.toUpperCase()}</strong></span>
               </div>
               <div className="text-slate-400 text-[11px]">
                 ACTIVE AGENTS: <span className="text-cyan-300 font-semibold">3 LEAD</span> | <span className="text-cyan-300 font-semibold">32 SPECIALISTS</span>
@@ -312,9 +321,9 @@ export const DeckarcAIPage: React.FC<DeckarcAIPageProps> = ({ onBack }) => {
               <button
                 type="button"
                 onClick={toggleListening}
-                disabled={!isListeningSupported}
+                disabled={!isListeningSupported || status === 'thinking'}
                 className={`px-6 py-2.5 rounded-full text-xs font-mono font-semibold tracking-wider transition-all duration-300 focus:outline-none flex items-center gap-2 ${
-                  !isListeningSupported
+                  !isListeningSupported || status === 'thinking'
                     ? 'bg-slate-900 border border-slate-800 text-slate-500 cursor-not-allowed opacity-60'
                     : status === 'listening'
                     ? 'bg-cyan-500 text-slate-950 border border-cyan-300 shadow-[0_0_25px_rgba(6,182,212,0.8)] animate-pulse'
@@ -332,6 +341,8 @@ export const DeckarcAIPage: React.FC<DeckarcAIPageProps> = ({ onBack }) => {
                 )}
                 {status === 'listening'
                   ? 'LISTENING...'
+                  : status === 'thinking'
+                  ? 'THINKING...'
                   : status === 'speaking'
                   ? 'SPEAKING REPLY...'
                   : !isListeningSupported
@@ -372,7 +383,10 @@ export const DeckarcAIPage: React.FC<DeckarcAIPageProps> = ({ onBack }) => {
                 {logEntries.length > 0 && (
                   <button
                     type="button"
-                    onClick={() => setLogEntries([])}
+                    onClick={() => {
+                      setLogEntries([]);
+                      conversationRef.current = [];
+                    }}
                     className="text-[10px] text-slate-500 hover:text-slate-300 transition-colors"
                   >
                     Clear Log
@@ -423,12 +437,13 @@ export const DeckarcAIPage: React.FC<DeckarcAIPageProps> = ({ onBack }) => {
                   type="text"
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
-                  placeholder="Ask about Yesterday, Today, or Tomorrow..."
-                  className="flex-1 bg-slate-950/90 border border-slate-800 focus:border-cyan-500/60 rounded-xl px-3.5 py-2 text-xs font-mono text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-cyan-500/30 transition-colors"
+                  placeholder="Ask about your projects, tasks, or Project Pulse..."
+                  disabled={status === 'thinking'}
+                  className="flex-1 bg-slate-950/90 border border-slate-800 focus:border-cyan-500/60 rounded-xl px-3.5 py-2 text-xs font-mono text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-1 focus:ring-cyan-500/30 transition-colors disabled:opacity-50"
                 />
                 <button
                   type="submit"
-                  disabled={!inputText.trim()}
+                  disabled={!inputText.trim() || status === 'thinking'}
                   className="px-3.5 py-2 rounded-xl bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-900/70 hover:border-cyan-400 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-mono text-xs flex items-center gap-1.5"
                 >
                   <Send className="w-3.5 h-3.5" />

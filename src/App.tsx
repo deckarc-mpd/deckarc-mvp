@@ -480,7 +480,7 @@ function AppContent() {
   }
   if (currentPage === 'deckarc-ai') {
     if (!isDeckarcAdminUser) return renderDashboard();
-    return <DeckarcAIPage onBack={() => navigateTo('dashboard')} />;
+    return <DeckarcAIPage onBack={() => navigateTo('dashboard')} onNavigate={navigateTo} />;
   }
 
   return (

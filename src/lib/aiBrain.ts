@@ -1,177 +1,136 @@
-import { fetchProjectPulseReport, ProjectPulseFullReport, DetailedPulseData, PulseSummary } from './projectPulseService';
-import { UserProfile } from './supabase';
+import { supabase } from './supabase';
+import { executeAITool, AIToolContext } from './aiTools';
 
-export interface AICapabilityContext {
-  profile: UserProfile | null;
+// DECKARC AI conversation orchestrator.
+//
+// This replaces the old regex/keyword capability dispatcher with a real
+// LLM-driven reasoning loop: every user message goes to the deckarc-ai-chat
+// edge function, which asks the LLM to either answer directly or call a tool.
+// When it calls a tool, we execute that tool here (client-side, inside the
+// user's authenticated session — see aiTools.ts) and send the result back so
+// the model can keep reasoning, until it produces a final answer.
+//
+// `history` is the raw Gemini `contents` array. The caller (DeckarcAIPage) is
+// responsible for holding onto it and passing it back in on the next message —
+// that's what gives the assistant multi-turn memory (e.g. resolving "it" to
+// whatever was discussed a turn earlier).
+
+export interface AIMessagePart {
+  text?: string;
+  functionCall?: { name: string; args?: Record<string, unknown> };
+  functionResponse?: { name: string; response: Record<string, unknown> };
 }
 
-export interface AICapability {
-  id: string;
-  name: string;
-  canHandle(prompt: string): boolean;
-  execute(prompt: string, context: AICapabilityContext): Promise<string>;
+export interface AIConversationTurn {
+  role: 'user' | 'model';
+  parts: AIMessagePart[];
 }
 
-function formatList(arr: string[]): string {
-  if (!arr || arr.length === 0) return 'None';
-  return arr.join(', ');
+export type AIAgentContext = AIToolContext;
+
+export interface AIAgentResult {
+  reply: string;
+  history: AIConversationTurn[];
 }
 
-/**
- * Format detailed Today data into natural, articulate text & spoken format
- */
-function formatTodayDetailed(t: DetailedPulseData['today']): string {
-  const parts: string[] = [`Project Pulse — Today's Full Breakdown:`];
-
-  parts.push(`Summary: ${t.summary}`);
-  parts.push(`Action Items Needing Attention (${t.actionItemsCount}): ${t.actionItemTitles.length > 0 ? formatList(t.actionItemTitles) : 'None'}`);
-  parts.push(`Scheduled Inspections (${t.inspectionsTodayCount}): ${formatList(t.inspectionsTodayDetails)}`);
-  parts.push(`Pending Permits (${t.pendingPermitsCount}): ${formatList(t.pendingPermitNumbers)}`);
-  parts.push(`Overdue Client Decisions (${t.overdueDecisionsCount}): ${formatList(t.overdueDecisionTitles)}`);
-  parts.push(`Open Delay Impacts (${t.openDelaysCount}): ${formatList(t.openDelayReasons)}`);
-  parts.push(`Supporting Info: ${t.supporting}`);
-
-  return parts.join('\n• ');
+interface ChatFunctionResponse {
+  done: boolean;
+  text?: string;
+  functionCall?: { name: string; args: Record<string, unknown> };
+  history?: AIConversationTurn[];
+  error?: string;
 }
 
-/**
- * Format detailed Tomorrow data into natural, articulate text & spoken format
- */
-function formatTomorrowDetailed(tm: DetailedPulseData['tomorrow']): string {
-  const parts: string[] = [`Project Pulse — Tomorrow's Full Breakdown:`];
+const MAX_TOOL_HOPS = 4;
 
-  parts.push(`Summary: ${tm.summary}`);
-  parts.push(`Tomorrow's Plan Tasks (${tm.tomorrowTasksCount}): ${formatList(tm.tomorrowTaskNames)}`);
-  parts.push(`Scheduled Inspections (${tm.tomorrowInspectionsCount}): ${formatList(tm.tomorrowInspectionDetails)}`);
-  parts.push(`Blocked Tasks at Risk (${tm.blockedTasksCount}): ${formatList(tm.blockedTaskNames)}`);
-  parts.push(`Schedule Delay Risks: ${tm.delayRiskCount} items`);
-  parts.push(`Supporting Info: ${tm.supporting}`);
-
-  return parts.join('\n• ');
-}
-
-/**
- * Format detailed Yesterday data into natural, articulate text & spoken format
- */
-function formatYesterdayDetailed(y: DetailedPulseData['yesterday']): string {
-  const parts: string[] = [`Project Pulse — Yesterday's Full Breakdown:`];
-
-  parts.push(`Summary: ${y.summary}`);
-  parts.push(`Daily Updates Received: ${y.updatesCount}`);
-  parts.push(`Completed Tasks (${y.completedTasksCount}): ${formatList(y.completedTaskNames)}`);
-  parts.push(`Field Blockers Reported (${y.blockersCount}): ${formatList(y.blockerDetails)}`);
-  parts.push(`Supporting Info: ${y.supporting}`);
-
-  return parts.join('\n• ');
-}
-
-/**
- * Capability 1: Project Pulse (Flexible Natural Language Querying)
- */
-export const ProjectPulseCapability: AICapability = {
-  id: 'project-pulse',
-  name: 'Project Pulse Access',
-  canHandle(prompt: string): boolean {
-    const text = prompt.toLowerCase();
-    return (
-      /pulse|today|yesterday|tomorrow|everything|access|folder|field|planned|schedule|status|overview|summary|report|happened|work|up for/i.test(text)
-    );
-  },
-  async execute(prompt: string, context: AICapabilityContext): Promise<string> {
-    const text = prompt.toLowerCase();
-    const report: ProjectPulseFullReport = await fetchProjectPulseReport(context.profile);
-    const { summaries, details } = report;
-
-    // Detect period intent
-    const isYesterday = /yesterday|happened yesterday|past|last day/i.test(text);
-    const isTomorrow  = /tomorrow|planned for tomorrow|next day|future/i.test(text);
-    const isToday     = /today|up for today|happening today|now|current/i.test(text);
-
-    // Detect request for full detailed access ("access everything", "all details", "everything in today", etc.)
-    const isFullAccess = /everything|every folder|every field|all fields|full|detail|details|breakdown|deep dive|all data/i.test(text);
-
-    // 1. "access everything to today" / "today details" / "access everything in today"
-    if (isToday && (isFullAccess || text.includes('everything') || text.includes('all'))) {
-      return formatTodayDetailed(details.today);
-    }
-
-    // 2. "access everything to tomorrow" / "tomorrow details" / "access everything in tomorrow"
-    if (isTomorrow && (isFullAccess || text.includes('everything') || text.includes('all'))) {
-      return formatTomorrowDetailed(details.tomorrow);
-    }
-
-    // 3. "access everything to yesterday" / "yesterday details" / "access everything in yesterday"
-    if (isYesterday && (isFullAccess || text.includes('everything') || text.includes('all'))) {
-      return formatYesterdayDetailed(details.yesterday);
-    }
-
-    // 4. "access everything" / "access everything in project pulse" (entire system)
-    if (isFullAccess && !isToday && !isTomorrow && !isYesterday) {
-      return [
-        `Full Project Pulse Access Across All Periods:`,
-        ``,
-        formatTodayDetailed(details.today),
-        ``,
-        formatTomorrowDetailed(details.tomorrow),
-        ``,
-        formatYesterdayDetailed(details.yesterday),
-      ].join('\n');
-    }
-
-    // 5. Standard period inquiries (e.g. "what happened yesterday", "what's up for today", "what's planned for tomorrow")
-    if (isYesterday) {
-      const p = summaries.Yesterday;
-      return `Yesterday's Project Pulse: ${p.summary} ${p.supporting}`;
-    }
-
-    if (isTomorrow) {
-      const p = summaries.Tomorrow;
-      return `Tomorrow's Project Pulse: ${p.summary} ${p.supporting}`;
-    }
-
-    if (isToday) {
-      const p = summaries.Today;
-      return `Today's Project Pulse: ${p.summary} ${p.supporting}`;
-    }
-
-    // Default overview across Project Pulse
-    return `Project Pulse Overview — Today: ${summaries.Today.summary} Tomorrow: ${summaries.Tomorrow.summary} Yesterday: ${summaries.Yesterday.summary}`;
-  },
-};
-
-/**
- * Registry of active AI capabilities.
- */
-export const ACTIVE_CAPABILITIES: AICapability[] = [
-  ProjectPulseCapability,
-];
-
-/**
- * Main AI Dispatcher for DECKARC AI Assistant
- */
-export async function processAIQuery(
-  userPrompt: string,
-  context: AICapabilityContext
-): Promise<string> {
-  const prompt = userPrompt.trim();
-  if (!prompt) {
-    return "I'm listening. Ask me about your Project Pulse for Yesterday, Today, or Tomorrow.";
-  }
-
-  const lower = prompt.toLowerCase();
-
-  // Greetings handler
-  if (/^(hello|hi|hey|greetings|good morning|good afternoon|good evening)/i.test(lower)) {
-    return "Hello! I'm DECKARC AI, your Project Pulse voice assistant. How can I help you today?";
-  }
-
-  // Capability matching
-  for (const capability of ACTIVE_CAPABILITIES) {
-    if (capability.canHandle(prompt)) {
-      return await capability.execute(prompt, context);
+async function extractEdgeFunctionErrorMessage(error: unknown): Promise<string> {
+  const withContext = error as { context?: Response; message?: string } | null;
+  if (withContext?.context && typeof withContext.context.json === 'function') {
+    try {
+      const body = await withContext.context.json();
+      if (body?.error) return body.error as string;
+    } catch {
+      // response body wasn't JSON — fall through to generic message
     }
   }
+  return withContext?.message || "DECKARC AI is temporarily unavailable. Please try again.";
+}
 
-  // Fallback
-  return `I am focused on your Project Pulse. You can ask me natural questions like "What's up for today?", "What's planned for tomorrow?", or "Access everything in today".`;
+async function callAIChatFunction(contents: AIConversationTurn[]): Promise<ChatFunctionResponse> {
+  const { data, error } = await supabase.functions.invoke('deckarc-ai-chat', {
+    body: { contents },
+  });
+
+  if (error) {
+    throw new Error(await extractEdgeFunctionErrorMessage(error));
+  }
+  if (!data) {
+    throw new Error('DECKARC AI returned an empty response. Please try again.');
+  }
+  if (data.error) {
+    throw new Error(data.error as string);
+  }
+  return data as ChatFunctionResponse;
+}
+
+/**
+ * Send a user message to DECKARC AI and resolve it to a final reply,
+ * executing any tool calls the model requests along the way.
+ */
+export async function sendAIMessage(
+  priorHistory: AIConversationTurn[],
+  userText: string,
+  context: AIAgentContext,
+): Promise<AIAgentResult> {
+  const trimmed = userText.trim();
+  if (!trimmed) {
+    return {
+      reply: "I'm listening. Ask me about your projects, tasks, or today's Project Pulse.",
+      history: priorHistory,
+    };
+  }
+
+  let contents: AIConversationTurn[] = [...priorHistory, { role: 'user', parts: [{ text: trimmed }] }];
+
+  for (let hop = 0; hop <= MAX_TOOL_HOPS; hop++) {
+    let response: ChatFunctionResponse;
+    try {
+      response = await callAIChatFunction(contents);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'DECKARC AI is temporarily unavailable.';
+      return { reply: message, history: priorHistory };
+    }
+
+    contents = response.history ?? contents;
+
+    if (response.done) {
+      return { reply: response.text || "I don't have an answer for that right now.", history: contents };
+    }
+
+    if (response.functionCall) {
+      const toolResult = await executeAITool(response.functionCall.name, response.functionCall.args, context);
+      contents = [
+        ...contents,
+        {
+          role: 'user',
+          parts: [
+            {
+              functionResponse: {
+                name: response.functionCall.name,
+                response: { result: toolResult },
+              },
+            },
+          ],
+        },
+      ];
+      continue;
+    }
+
+    return { reply: "I wasn't able to process that request.", history: contents };
+  }
+
+  return {
+    reply: "I'm having trouble completing that request right now. Could you try rephrasing it?",
+    history: contents,
+  };
 }
