@@ -95,7 +95,7 @@ function tomorrowDateString(instant: Date): string {
   return d.toISOString().split('T')[0];
 }
 
-export default async function handler(req: Request): Promise<Response> {
+export async function POST(req: Request): Promise<Response> {
   const cronSecret = process.env.CRON_SECRET;
   if (cronSecret) {
     const authHeader = req.headers.get('authorization');

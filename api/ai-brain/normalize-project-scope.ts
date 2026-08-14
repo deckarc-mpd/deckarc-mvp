@@ -20,7 +20,7 @@ const SYSTEM_PROMPT = `You classify a free-text construction project scope descr
 
 Respond with ONLY a JSON object: {"normalizedCategory": "<one of the given categories, verbatim>", "confidence": one of "high"|"medium"|"low", "explanation": "..."}. No markdown, no extra text.`;
 
-export default async function handler(req: Request): Promise<Response> {
+export async function POST(req: Request): Promise<Response> {
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
 
   const key = process.env.GEMINI_API_KEY;

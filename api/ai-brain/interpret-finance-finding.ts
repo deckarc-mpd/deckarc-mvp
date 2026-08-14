@@ -21,7 +21,7 @@ const SYSTEM_PROMPT = `You interpret construction-project financial records (bil
 
 Respond with ONLY a JSON object: {"category": one of "billing_dispute"|"collections_response"|"ap_dispute"|"other", "severity": one of "low"|"medium"|"high", "explanation": "..."}. No markdown, no extra text.`;
 
-export default async function handler(req: Request): Promise<Response> {
+export async function POST(req: Request): Promise<Response> {
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
 
   const key = process.env.GEMINI_API_KEY;
