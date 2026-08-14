@@ -46,14 +46,14 @@
 // src/lib/aiBrain/scheduling/__tests__/schedulingConfig.test.ts.
 
 import { createClient } from '@supabase/supabase-js';
-import { createSupabaseRepository } from '../../src/lib/aiBrain/supabaseRepository.ts';
-import { AuditLog } from '../../src/lib/aiBrain/audit.ts';
-import { WorkflowEngine } from '../../src/lib/aiBrain/workflow.ts';
-import { ToolRegistry } from '../../src/lib/aiBrain/tools.ts';
-import { GeminiRiskInterpreter } from '../../src/lib/aiBrain/domains/projectOps/aiInterpreter.ts';
-import { GeminiComplianceInterpreter } from '../../src/lib/aiBrain/domains/compliance/aiInterpreter.ts';
-import { GeminiFinanceInterpreter } from '../../src/lib/aiBrain/domains/finance/aiInterpreter.ts';
-import { GeminiFollowUpDraftClient } from '../../src/lib/aiBrain/domains/sales/followUpDraftClient.ts';
+import { createSupabaseRepository } from '../../src/lib/aiBrain/supabaseRepository';
+import { AuditLog } from '../../src/lib/aiBrain/audit';
+import { WorkflowEngine } from '../../src/lib/aiBrain/workflow';
+import { ToolRegistry } from '../../src/lib/aiBrain/tools';
+import { GeminiRiskInterpreter } from '../../src/lib/aiBrain/domains/projectOps/aiInterpreter';
+import { GeminiComplianceInterpreter } from '../../src/lib/aiBrain/domains/compliance/aiInterpreter';
+import { GeminiFinanceInterpreter } from '../../src/lib/aiBrain/domains/finance/aiInterpreter';
+import { GeminiFollowUpDraftClient } from '../../src/lib/aiBrain/domains/sales/followUpDraftClient';
 import {
   runDailyOperatingSweeps,
   runCompliancePermitInspectionSweep,
@@ -62,16 +62,16 @@ import {
   type SweepProjectInput,
   type ComplianceSweepProjectInput,
   type FinanceSweepProjectInput,
-} from '../../src/lib/aiBrain/scheduling/sweepOrchestrator.ts';
+} from '../../src/lib/aiBrain/scheduling/sweepOrchestrator';
 import {
   isWithinSweepWindow,
   localWeekday,
   isBusinessDay,
   type CompanyScheduleConfig,
   DEFAULT_EXCLUDED_PROJECT_STATUSES,
-} from '../../src/lib/aiBrain/scheduling/schedulingConfig.ts';
-import type { ReadinessComplianceDocument } from '../../src/lib/aiBrain/domains/compliance/types.ts';
-import type { ReadinessLead } from '../../src/lib/aiBrain/domains/sales/types.ts';
+} from '../../src/lib/aiBrain/scheduling/schedulingConfig';
+import type { ReadinessComplianceDocument } from '../../src/lib/aiBrain/domains/compliance/types';
+import type { ReadinessLead } from '../../src/lib/aiBrain/domains/sales/types';
 
 const TOMORROW_READINESS_LOCAL_TIME = '15:00';
 const TRADE_CONFIRMATION_CUTOFF_LOCAL_TIME = '16:00';

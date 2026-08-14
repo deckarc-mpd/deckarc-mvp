@@ -9,14 +9,14 @@
 // sandbox — see api/cron/scheduled-sweep.ts's header for the same caveat.
 
 import { createClient } from '@supabase/supabase-js';
-import { createSupabaseRepository } from '../../src/lib/aiBrain/supabaseRepository.ts';
-import { AuditLog } from '../../src/lib/aiBrain/audit.ts';
-import { WorkflowEngine } from '../../src/lib/aiBrain/workflow.ts';
-import { ToolRegistry } from '../../src/lib/aiBrain/tools.ts';
-import { emitScheduleEvent } from '../../src/lib/aiBrain/events.ts';
-import { createBillingArMarginSweepHandler, type BillingArMarginSweepPayload } from '../../src/lib/aiBrain/sops/billingArMarginSweep.ts';
-import { DeterministicFinanceInterpreter, GeminiFinanceInterpreter } from '../../src/lib/aiBrain/domains/finance/aiInterpreter.ts';
-import type { DeterministicFinanceResult, FinanceInterpretation } from '../../src/lib/aiBrain/domains/finance/types.ts';
+import { createSupabaseRepository } from '../../src/lib/aiBrain/supabaseRepository';
+import { AuditLog } from '../../src/lib/aiBrain/audit';
+import { WorkflowEngine } from '../../src/lib/aiBrain/workflow';
+import { ToolRegistry } from '../../src/lib/aiBrain/tools';
+import { emitScheduleEvent } from '../../src/lib/aiBrain/events';
+import { createBillingArMarginSweepHandler, type BillingArMarginSweepPayload } from '../../src/lib/aiBrain/sops/billingArMarginSweep';
+import { DeterministicFinanceInterpreter, GeminiFinanceInterpreter } from '../../src/lib/aiBrain/domains/finance/aiInterpreter';
+import type { DeterministicFinanceResult, FinanceInterpretation } from '../../src/lib/aiBrain/domains/finance/types';
 
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405);

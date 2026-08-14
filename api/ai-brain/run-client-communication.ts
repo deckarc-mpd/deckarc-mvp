@@ -9,14 +9,14 @@
 // sandbox — see api/cron/scheduled-sweep.ts's header for the same caveat.
 
 import { createClient } from '@supabase/supabase-js';
-import { createSupabaseRepository } from '../../src/lib/aiBrain/supabaseRepository.ts';
-import { AuditLog } from '../../src/lib/aiBrain/audit.ts';
-import { WorkflowEngine } from '../../src/lib/aiBrain/workflow.ts';
-import { ToolRegistry } from '../../src/lib/aiBrain/tools.ts';
-import { emitScheduleEvent } from '../../src/lib/aiBrain/events.ts';
-import { createClientCommunicationDraftHandler, type ClientCommunicationDraftPayload } from '../../src/lib/aiBrain/sops/clientCommunicationDraft.ts';
-import { DeterministicDraftClient, GeminiDraftClient } from '../../src/lib/aiBrain/domains/customerSuccess/draftClient.ts';
-import type { ClientCommunicationDraft, VerifiedClientFacts } from '../../src/lib/aiBrain/domains/customerSuccess/types.ts';
+import { createSupabaseRepository } from '../../src/lib/aiBrain/supabaseRepository';
+import { AuditLog } from '../../src/lib/aiBrain/audit';
+import { WorkflowEngine } from '../../src/lib/aiBrain/workflow';
+import { ToolRegistry } from '../../src/lib/aiBrain/tools';
+import { emitScheduleEvent } from '../../src/lib/aiBrain/events';
+import { createClientCommunicationDraftHandler, type ClientCommunicationDraftPayload } from '../../src/lib/aiBrain/sops/clientCommunicationDraft';
+import { DeterministicDraftClient, GeminiDraftClient } from '../../src/lib/aiBrain/domains/customerSuccess/draftClient';
+import type { ClientCommunicationDraft, VerifiedClientFacts } from '../../src/lib/aiBrain/domains/customerSuccess/types';
 
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
