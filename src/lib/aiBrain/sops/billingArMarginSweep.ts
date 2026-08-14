@@ -18,15 +18,15 @@
 // re-derives finalStatus and fails the run if it ever diverges from what
 // financeAssessment.ts computed).
 
-import { callTool } from '../tools.ts';
-import { evaluateAuthority } from '../policy.ts';
-import { getAgentOrThrow } from '../registry.ts';
+import { callTool } from '../tools.js';
+import { evaluateAuthority } from '../policy.js';
+import { getAgentOrThrow } from '../registry.js';
 import {
   computeFinanceAssessmentTool,
   createInterpretFinanceFindingTool,
   type ComputeFinanceAssessmentArgs,
-} from '../tools/financeTools.ts';
-import type { FinanceInterpreterClient, FinanceInterpretInput } from '../domains/finance/aiInterpreter.ts';
+} from '../tools/financeTools.js';
+import type { FinanceInterpreterClient, FinanceInterpretInput } from '../domains/finance/aiInterpreter.js';
 import type {
   ReadinessPaymentMilestone,
   ReadinessVendorBill,
@@ -34,8 +34,8 @@ import type {
   ReadinessChangeOrder,
   DeterministicFinanceResult,
   FinanceInterpretation,
-} from '../domains/finance/types.ts';
-import type { SopExecutionContext, SopOutcome } from '../workflow.ts';
+} from '../domains/finance/types.js';
+import type { SopExecutionContext, SopOutcome } from '../workflow.js';
 
 export interface BillingArMarginSweepPayload {
   projectId: string;

@@ -6,23 +6,23 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../../../memoryRepository.ts';
-import { AuditLog, newCorrelationId } from '../../../audit.ts';
-import { emitScheduleEvent } from '../../../events.ts';
-import { WorkflowEngine } from '../../../workflow.ts';
-import type { SopExecutionContext, SopOutcome } from '../../../workflow.ts';
-import { ToolRegistry, callTool } from '../../../tools.ts';
-import { seedMemoryRegistry } from '../../../registry.ts';
-import { createTomorrowReadinessHandler } from '../../../sops/tomorrowReadiness.ts';
+import { MemoryRepository } from '../../../memoryRepository.js';
+import { AuditLog, newCorrelationId } from '../../../audit.js';
+import { emitScheduleEvent } from '../../../events.js';
+import { WorkflowEngine } from '../../../workflow.js';
+import type { SopExecutionContext, SopOutcome } from '../../../workflow.js';
+import { ToolRegistry, callTool } from '../../../tools.js';
+import { seedMemoryRegistry } from '../../../registry.js';
+import { createTomorrowReadinessHandler } from '../../../sops/tomorrowReadiness.js';
 import {
   computeTomorrowReadinessTool,
   createInterpretFieldUpdateTool,
   type ComputeReadinessArgs,
-} from '../../../tools/projectOpsTools.ts';
-import { DeterministicRiskInterpreter } from '../aiInterpreter.ts';
-import type { DeterministicReadinessResult } from '../types.ts';
-import { REPRESENTATIVE_PROJECTS } from '../__fixtures__/representativeProjects.ts';
-import type { TomorrowReadinessPayload } from '../../../sops/tomorrowReadiness.ts';
+} from '../../../tools/projectOpsTools.js';
+import { DeterministicRiskInterpreter } from '../aiInterpreter.js';
+import type { DeterministicReadinessResult } from '../types.js';
+import { REPRESENTATIVE_PROJECTS } from '../__fixtures__/representativeProjects.js';
+import type { TomorrowReadinessPayload } from '../../../sops/tomorrowReadiness.js';
 
 function buildHarness() {
   const repo = new MemoryRepository();

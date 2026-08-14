@@ -1,9 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildActionCenterQueues, totalActionCenterItems } from '../queues.ts';
-import type { ActionCenterInput } from '../queues.ts';
-import type { BoardItemSummary } from '../../../../actionBoardHelpers.ts';
-import type { ApprovalRecord, WorkflowRun } from '../../../types.ts';
+import { buildActionCenterQueues, totalActionCenterItems } from '../queues.js';
+import type { ActionCenterInput } from '../queues.js';
+import type { BoardItemSummary } from '../../../../actionBoardHelpers.js';
+import type { ApprovalRecord, WorkflowRun } from '../../../types.js';
 
 function boardItem(overrides: Partial<BoardItemSummary>): BoardItemSummary {
   return { id: 'item-1', category: 'critical', title: 'Item', subtitle: '', projectId: 'proj-1', ...overrides };

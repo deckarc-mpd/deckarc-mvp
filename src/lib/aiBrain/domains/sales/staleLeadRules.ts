@@ -2,7 +2,7 @@
 // A lead is "stale" purely from elapsed time since created_at plus its
 // current status — no LLM judgment involved in deciding staleness itself.
 
-import type { ReadinessLead, StaleLeadFinding } from './types.ts';
+import type { ReadinessLead, StaleLeadFinding } from './types.js';
 
 /** Days without contact before a lead in each open status counts as stale. Terminal statuses never go stale. */
 export const STALE_DAYS_BY_STATUS: Record<string, number> = {

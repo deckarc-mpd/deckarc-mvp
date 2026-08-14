@@ -14,17 +14,17 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../../../memoryRepository.ts';
-import { AuditLog, newCorrelationId } from '../../../audit.ts';
-import { emitScheduleEvent } from '../../../events.ts';
-import { WorkflowEngine } from '../../../workflow.ts';
-import { ToolRegistry } from '../../../tools.ts';
-import { seedMemoryRegistry } from '../../../registry.ts';
-import { createClientCommunicationDraftHandler, type ClientCommunicationDraftPayload } from '../../../sops/clientCommunicationDraft.ts';
-import { DeterministicDraftClient, validateDraftGroundedness } from '../draftClient.ts';
-import { gatherVerifiedClientFacts } from '../verifiedFacts.ts';
-import { REPRESENTATIVE_SCENARIOS } from '../__fixtures__/representativeScenarios.ts';
-import type { ClientCommunicationDraft } from '../types.ts';
+import { MemoryRepository } from '../../../memoryRepository.js';
+import { AuditLog, newCorrelationId } from '../../../audit.js';
+import { emitScheduleEvent } from '../../../events.js';
+import { WorkflowEngine } from '../../../workflow.js';
+import { ToolRegistry } from '../../../tools.js';
+import { seedMemoryRegistry } from '../../../registry.js';
+import { createClientCommunicationDraftHandler, type ClientCommunicationDraftPayload } from '../../../sops/clientCommunicationDraft.js';
+import { DeterministicDraftClient, validateDraftGroundedness } from '../draftClient.js';
+import { gatherVerifiedClientFacts } from '../verifiedFacts.js';
+import { REPRESENTATIVE_SCENARIOS } from '../__fixtures__/representativeScenarios.js';
+import type { ClientCommunicationDraft } from '../types.js';
 
 test('exit gate coverage: every representative scenario has an expectation', () => {
   assert.ok(REPRESENTATIVE_SCENARIOS.length >= 3 && REPRESENTATIVE_SCENARIOS.length <= 5);

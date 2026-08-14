@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { routeExecutionMethod, evaluateAuthority, authorityAtLeast } from '../policy.ts';
+import { routeExecutionMethod, evaluateAuthority, authorityAtLeast } from '../policy.js';
 
 test('routeExecutionMethod: deterministic code always wins, regardless of the other flags', () => {
   assert.equal(

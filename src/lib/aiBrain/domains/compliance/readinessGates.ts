@@ -11,7 +11,7 @@ import type {
   ComplianceGateResult,
   DeterministicComplianceResult,
   ComplianceOverallStatus,
-} from './types.ts';
+} from './types.js';
 
 /** Permits/COI/licenses expiring within this many days count as a live risk, not just an already-expired one. */
 export const EXPIRY_WARNING_DAYS = 14;

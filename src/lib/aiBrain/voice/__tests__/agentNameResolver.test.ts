@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { resolveSpokenAgentName } from '../agentNameResolver.ts';
+import { resolveSpokenAgentName } from '../agentNameResolver.js';
 
 test('resolves a spoken display name to its stable agent id', () => {
   assert.equal(resolveSpokenAgentName('Marcus, approve the trade issue'), 'project_operations');

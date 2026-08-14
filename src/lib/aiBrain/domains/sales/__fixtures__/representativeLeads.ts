@@ -2,7 +2,7 @@
 // exceptions match human review, with no unauthorized consequential
 // action").
 
-import type { ReadinessLead } from '../types.ts';
+import type { ReadinessLead } from '../types.js';
 
 const TODAY = '2026-08-13';
 

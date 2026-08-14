@@ -17,7 +17,7 @@
 // auto-execute," which is exactly the mistake Frozen §7 draws two separate
 // branches to prevent.
 
-import type { AuthorityLevel, ExecutionMethod } from './types.ts';
+import type { AuthorityLevel, ExecutionMethod } from './types.js';
 
 const AUTHORITY_ORDER: AuthorityLevel[] = ['L0', 'L1', 'L2', 'L3', 'L4'];
 

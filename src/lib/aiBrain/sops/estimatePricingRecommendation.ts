@@ -19,24 +19,24 @@
 // role is to review the proposed range and decide the actual price
 // themselves, entirely outside this SOP.
 
-import { callTool } from '../tools.ts';
-import { evaluateAuthority } from '../policy.ts';
-import { getAgentOrThrow } from '../registry.ts';
+import { callTool } from '../tools.js';
+import { evaluateAuthority } from '../policy.js';
+import { getAgentOrThrow } from '../registry.js';
 import {
   findComparablePricingTool,
   createNormalizeProjectScopeTool,
-} from '../tools/estimatingTools.ts';
-import type { FindComparablePricingArgs } from '../tools/estimatingTools.ts';
-import type { ScopeInterpreterClient } from '../domains/estimating/scopeInterpreter.ts';
+} from '../tools/estimatingTools.js';
+import type { FindComparablePricingArgs } from '../tools/estimatingTools.js';
+import type { ScopeInterpreterClient } from '../domains/estimating/scopeInterpreter.js';
 import type {
   ReadinessCompletedProject,
   ReadinessCostEntry,
   PricingRecommendation,
   ScopeNormalizationResult,
   EstimateAssessmentStatus,
-} from '../domains/estimating/types.ts';
-import { MIN_COMPARABLES_FOR_RECOMMENDATION } from '../domains/estimating/comparableHistory.ts';
-import type { SopExecutionContext, SopOutcome } from '../workflow.ts';
+} from '../domains/estimating/types.js';
+import { MIN_COMPARABLES_FOR_RECOMMENDATION } from '../domains/estimating/comparableHistory.js';
+import type { SopExecutionContext, SopOutcome } from '../workflow.js';
 
 export interface EstimatePricingRecommendationPayload {
   scopeText: string;

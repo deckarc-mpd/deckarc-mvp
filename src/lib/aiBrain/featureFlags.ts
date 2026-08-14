@@ -8,7 +8,7 @@
 // without exposing any Phase 1 capability to every existing tenant the
 // moment this code ships (Frozen §14's lean/incremental posture).
 
-import type { AiBrainRepository } from './repository.ts';
+import type { AiBrainRepository } from './repository.js';
 
 export const AI_BRAIN_FLAG_KEYS = [
   'ai_brain_enabled',

@@ -2,7 +2,7 @@
 // exceptions match human review, with no unauthorized consequential
 // action"), same role as Project Ops' representativeProjects.ts.
 
-import type { ReadinessPermit, ReadinessInspection, ReadinessComplianceDocument, ComplianceOverallStatus } from '../types.ts';
+import type { ReadinessPermit, ReadinessInspection, ReadinessComplianceDocument, ComplianceOverallStatus } from '../types.js';
 
 const TODAY = '2026-08-13';
 

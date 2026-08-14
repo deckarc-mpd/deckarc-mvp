@@ -5,7 +5,7 @@
 // fabricate a claim about the lead's history. validateFollowUpGroundedness
 // independently checks the produced draft actually names the lead.
 
-import type { StaleLeadFinding, LeadFollowUpDraft } from './types.ts';
+import type { StaleLeadFinding, LeadFollowUpDraft } from './types.js';
 
 export interface FollowUpDraftClient {
   draft(finding: StaleLeadFinding): Promise<{ subject: string; body: string }>;

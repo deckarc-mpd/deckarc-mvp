@@ -31,15 +31,15 @@
 // detected issue) is done. So both 'approved' and 'rejected' here resolve
 // to `completed`; only 'pending' stays parked.
 
-import { callTool } from '../tools.ts';
-import { evaluateAuthority } from '../policy.ts';
-import { getAgentOrThrow } from '../registry.ts';
+import { callTool } from '../tools.js';
+import { evaluateAuthority } from '../policy.js';
+import { getAgentOrThrow } from '../registry.js';
 import {
   assessTradeMaterialCoordinationTool,
   createInterpretFieldUpdateTool,
   type AssessTradeMaterialArgs,
-} from '../tools/projectOpsTools.ts';
-import type { RiskInterpreterClient, RiskInterpretInput } from '../domains/projectOps/aiInterpreter.ts';
+} from '../tools/projectOpsTools.js';
+import type { RiskInterpreterClient, RiskInterpretInput } from '../domains/projectOps/aiInterpreter.js';
 import type {
   ReadinessTask,
   ReadinessCrewConfirmation,
@@ -48,8 +48,8 @@ import type {
   DeterministicReadinessResult,
   RiskInterpretation,
   TradeMaterialCoordinationResult,
-} from '../domains/projectOps/types.ts';
-import type { SopExecutionContext, SopOutcome } from '../workflow.ts';
+} from '../domains/projectOps/types.js';
+import type { SopExecutionContext, SopOutcome } from '../workflow.js';
 
 export interface TradeMaterialCoordinationPayload {
   projectId: string;

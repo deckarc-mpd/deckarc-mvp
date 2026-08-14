@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { DeterministicScopeInterpreter, shouldInvokeScopeNormalization, KNOWN_PROJECT_TYPES } from '../scopeInterpreter.ts';
+import { DeterministicScopeInterpreter, shouldInvokeScopeNormalization, KNOWN_PROJECT_TYPES } from '../scopeInterpreter.js';
 
 test('an exact known category is never sent to AI', async () => {
   assert.equal(shouldInvokeScopeNormalization('Kitchen remodel'), false);

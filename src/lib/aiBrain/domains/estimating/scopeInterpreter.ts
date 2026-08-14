@@ -3,7 +3,7 @@
 // touches pricing. ScopeNormalizationResult has no numeric field at all,
 // so there is nothing here for AI to influence about price.
 
-import type { ScopeNormalizationResult } from './types.ts';
+import type { ScopeNormalizationResult } from './types.js';
 
 export const KNOWN_PROJECT_TYPES = [
   'Single-story room addition', 'Two-story extension', 'Bathroom remodel',

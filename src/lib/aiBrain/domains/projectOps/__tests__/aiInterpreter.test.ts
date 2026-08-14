@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { DeterministicRiskInterpreter, shouldInvokeInterpretation } from '../aiInterpreter.ts';
-import type { DeterministicReadinessResult } from '../types.ts';
+import { DeterministicRiskInterpreter, shouldInvokeInterpretation } from '../aiInterpreter.js';
+import type { DeterministicReadinessResult } from '../types.js';
 
 function readiness(overrides: Partial<DeterministicReadinessResult> = {}): DeterministicReadinessResult {
   return {

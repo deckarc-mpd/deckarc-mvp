@@ -3,7 +3,7 @@
 // no LLM anywhere in this file, and no write path (this never adjusts a
 // contract or posts a cost; it only reads and sums what's already there).
 
-import type { ReadinessCostEntry, ReadinessChangeOrder, MarginResult } from './types.ts';
+import type { ReadinessCostEntry, ReadinessChangeOrder, MarginResult } from './types.js';
 
 /** A margin below this percent is flagged as a risk worth a human look. */
 export const MARGIN_WARNING_PERCENT = 15;

@@ -29,7 +29,7 @@ import type {
   AgentDefinition,
   SopDefinition,
   FeatureFlagState,
-} from './types.ts';
+} from './types.js';
 
 export interface AiBrainRepository {
   // Audit — Event

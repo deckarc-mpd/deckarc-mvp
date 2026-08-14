@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { findComparableProjects, computePricingRecommendation, MIN_COMPARABLES_FOR_RECOMMENDATION } from '../comparableHistory.ts';
-import type { ReadinessCompletedProject, ReadinessCostEntry } from '../types.ts';
+import { findComparableProjects, computePricingRecommendation, MIN_COMPARABLES_FOR_RECOMMENDATION } from '../comparableHistory.js';
+import type { ReadinessCompletedProject, ReadinessCostEntry } from '../types.js';
 
 function project(overrides: Partial<ReadinessCompletedProject>): ReadinessCompletedProject {
   return { id: 'p1', project_type: 'Kitchen remodel', status: 'Completed', contract_amount: 100000, ...overrides };

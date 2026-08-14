@@ -14,7 +14,7 @@ import type {
   ReadinessMaterial,
   ReadinessDailyUpdate,
   OverallReadinessStatus,
-} from '../types.ts';
+} from '../types.js';
 
 export const TOMORROW = '2026-08-13';
 

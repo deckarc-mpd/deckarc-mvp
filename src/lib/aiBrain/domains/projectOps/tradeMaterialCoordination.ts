@@ -18,7 +18,7 @@ import type {
   TradeConfirmationIssue,
   MaterialScheduleRisk,
   TradeMaterialCoordinationResult,
-} from './types.ts';
+} from './types.js';
 
 // ─── Trade confirmation cutoff ──────────────────────────────────────────────
 //

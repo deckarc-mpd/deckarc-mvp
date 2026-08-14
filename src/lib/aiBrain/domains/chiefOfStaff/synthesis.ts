@@ -12,7 +12,7 @@
 // a re-ordering, never a resolution, never a routing decision. An empty
 // list means zero AI calls, per §11.
 
-import type { ResolvedException, RankedException, ChiefOfStaffSynthesis, ResolvedExceptionSource } from './types.ts';
+import type { ResolvedException, RankedException, ChiefOfStaffSynthesis, ResolvedExceptionSource } from './types.js';
 
 const SOURCE_PRIORITY: Record<ResolvedExceptionSource, number> = {
   critical_item: 0,

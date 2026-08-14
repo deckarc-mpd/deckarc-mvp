@@ -6,41 +6,41 @@
 // should run those SOPs against, and it always records a summary event per
 // company/SOP, even when a sweep finds nothing (CP360_SCHEDULED_OPERATING_EVENTS.md §7).
 
-import { emitScheduleEvent } from '../events.ts';
-import type { AuditLog, AuditContext } from '../audit.ts';
-import type { AiBrainRepository } from '../repository.ts';
-import type { WorkflowEngine } from '../workflow.ts';
-import { createTomorrowReadinessHandler, type TomorrowReadinessPayload } from '../sops/tomorrowReadiness.ts';
+import { emitScheduleEvent } from '../events.js';
+import type { AuditLog, AuditContext } from '../audit.js';
+import type { AiBrainRepository } from '../repository.js';
+import type { WorkflowEngine } from '../workflow.js';
+import { createTomorrowReadinessHandler, type TomorrowReadinessPayload } from '../sops/tomorrowReadiness.js';
 import {
   createTradeMaterialCoordinationHandler,
   type TradeMaterialCoordinationPayload,
-} from '../sops/tradeMaterialCoordination.ts';
-import { createCompliancePermitInspectionSweepHandler, type CompliancePermitInspectionSweepPayload } from '../sops/compliancePermitInspectionSweep.ts';
-import { createBillingArMarginSweepHandler, type BillingArMarginSweepPayload } from '../sops/billingArMarginSweep.ts';
-import { createSalesPipelineHygieneHandler, type SalesPipelineHygienePayload } from '../sops/salesPipelineHygiene.ts';
-import type { RiskInterpreterClient } from '../domains/projectOps/aiInterpreter.ts';
-import type { ComplianceInterpreterClient } from '../domains/compliance/aiInterpreter.ts';
-import type { FinanceInterpreterClient } from '../domains/finance/aiInterpreter.ts';
-import type { FollowUpDraftClient } from '../domains/sales/followUpDraftClient.ts';
+} from '../sops/tradeMaterialCoordination.js';
+import { createCompliancePermitInspectionSweepHandler, type CompliancePermitInspectionSweepPayload } from '../sops/compliancePermitInspectionSweep.js';
+import { createBillingArMarginSweepHandler, type BillingArMarginSweepPayload } from '../sops/billingArMarginSweep.js';
+import { createSalesPipelineHygieneHandler, type SalesPipelineHygienePayload } from '../sops/salesPipelineHygiene.js';
+import type { RiskInterpreterClient } from '../domains/projectOps/aiInterpreter.js';
+import type { ComplianceInterpreterClient } from '../domains/compliance/aiInterpreter.js';
+import type { FinanceInterpreterClient } from '../domains/finance/aiInterpreter.js';
+import type { FollowUpDraftClient } from '../domains/sales/followUpDraftClient.js';
 import type {
   ReadinessTask,
   ReadinessCrewConfirmation,
   ReadinessMaterial,
   ReadinessDailyUpdate,
-} from '../domains/projectOps/types.ts';
+} from '../domains/projectOps/types.js';
 import type {
   ReadinessPermit,
   ReadinessInspection,
   ReadinessComplianceDocument,
-} from '../domains/compliance/types.ts';
+} from '../domains/compliance/types.js';
 import type {
   ReadinessPaymentMilestone,
   ReadinessVendorBill,
   ReadinessCostEntry,
   ReadinessChangeOrder,
-} from '../domains/finance/types.ts';
-import type { ReadinessLead } from '../domains/sales/types.ts';
-import { isProjectEligibleForSweep, type CompanyScheduleConfig } from './schedulingConfig.ts';
+} from '../domains/finance/types.js';
+import type { ReadinessLead } from '../domains/sales/types.js';
+import { isProjectEligibleForSweep, type CompanyScheduleConfig } from './schedulingConfig.js';
 
 export interface SweepProjectInput {
   projectId: string;

@@ -29,17 +29,17 @@
 // never free-form model text — so a spoken confirmation can never claim
 // something happened that didn't.
 
-import { newCorrelationId } from '../audit.ts';
-import type { AuditLog } from '../audit.ts';
-import type { AiBrainRepository } from '../repository.ts';
-import type { WorkflowEngine, SopHandler } from '../workflow.ts';
-import { emitVoiceEvent } from '../events.ts';
-import { classifyVoiceIntent } from './intentClassifier.ts';
-import { requiresReadBackConfirmation } from './confidenceGate.ts';
-import type { VoiceSession, TranscribedUtterance, VoiceTurnResult, VoiceEntityDirectory, ClassifiedIntent } from './types.ts';
-import type { TomorrowReadinessPayload } from '../sops/tomorrowReadiness.ts';
-import type { TaskDelayReportedPayload } from '../sops/taskDelayCascade.ts';
-import type { SweepProjectInput } from '../scheduling/sweepOrchestrator.ts';
+import { newCorrelationId } from '../audit.js';
+import type { AuditLog } from '../audit.js';
+import type { AiBrainRepository } from '../repository.js';
+import type { WorkflowEngine, SopHandler } from '../workflow.js';
+import { emitVoiceEvent } from '../events.js';
+import { classifyVoiceIntent } from './intentClassifier.js';
+import { requiresReadBackConfirmation } from './confidenceGate.js';
+import type { VoiceSession, TranscribedUtterance, VoiceTurnResult, VoiceEntityDirectory, ClassifiedIntent } from './types.js';
+import type { TomorrowReadinessPayload } from '../sops/tomorrowReadiness.js';
+import type { TaskDelayReportedPayload } from '../sops/taskDelayCascade.js';
+import type { SweepProjectInput } from '../scheduling/sweepOrchestrator.js';
 
 export interface VoiceAdapterDeps {
   audit: AuditLog;

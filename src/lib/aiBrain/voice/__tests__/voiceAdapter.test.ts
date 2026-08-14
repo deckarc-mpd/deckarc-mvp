@@ -6,18 +6,18 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../../memoryRepository.ts';
-import { AuditLog } from '../../audit.ts';
-import { WorkflowEngine } from '../../workflow.ts';
-import { ToolRegistry, type ToolDefinition } from '../../tools.ts';
-import { seedMemoryRegistry } from '../../registry.ts';
-import { createTomorrowReadinessHandler } from '../../sops/tomorrowReadiness.ts';
-import { taskDelayCascadeHandler } from '../../sops/taskDelayCascade.ts';
-import { DeterministicRiskInterpreter } from '../../domains/projectOps/aiInterpreter.ts';
-import { handleVoiceTurn, cancelPendingVoiceAction, type VoiceAdapterDeps } from '../voiceAdapter.ts';
-import type { VoiceSession, VoiceEntityDirectory } from '../types.ts';
-import type { CascadeDelayArgs, CascadeDelayResult } from '../../tools/cascadeDelayTool.ts';
-import type { SweepProjectInput } from '../../scheduling/sweepOrchestrator.ts';
+import { MemoryRepository } from '../../memoryRepository.js';
+import { AuditLog } from '../../audit.js';
+import { WorkflowEngine } from '../../workflow.js';
+import { ToolRegistry, type ToolDefinition } from '../../tools.js';
+import { seedMemoryRegistry } from '../../registry.js';
+import { createTomorrowReadinessHandler } from '../../sops/tomorrowReadiness.js';
+import { taskDelayCascadeHandler } from '../../sops/taskDelayCascade.js';
+import { DeterministicRiskInterpreter } from '../../domains/projectOps/aiInterpreter.js';
+import { handleVoiceTurn, cancelPendingVoiceAction, type VoiceAdapterDeps } from '../voiceAdapter.js';
+import type { VoiceSession, VoiceEntityDirectory } from '../types.js';
+import type { CascadeDelayArgs, CascadeDelayResult } from '../../tools/cascadeDelayTool.js';
+import type { SweepProjectInput } from '../../scheduling/sweepOrchestrator.js';
 
 const DIRECTORY: VoiceEntityDirectory = {
   projects: [{ id: 'proj-thompson', name: 'Thompson Deck Build' }],

@@ -1,17 +1,17 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../../../memoryRepository.ts';
-import { AuditLog, newCorrelationId } from '../../../audit.ts';
-import { ToolRegistry, callTool } from '../../../tools.ts';
+import { MemoryRepository } from '../../../memoryRepository.js';
+import { AuditLog, newCorrelationId } from '../../../audit.js';
+import { ToolRegistry, callTool } from '../../../tools.js';
 import {
   computeTomorrowReadinessTool,
   createInterpretFieldUpdateTool,
   assessTradeMaterialCoordinationTool,
   type ComputeReadinessArgs,
   type AssessTradeMaterialArgs,
-} from '../../../tools/projectOpsTools.ts';
-import { DeterministicRiskInterpreter, type RiskInterpretInput } from '../aiInterpreter.ts';
-import type { DeterministicReadinessResult, RiskInterpretation, TradeMaterialCoordinationResult } from '../types.ts';
+} from '../../../tools/projectOpsTools.js';
+import { DeterministicRiskInterpreter, type RiskInterpretInput } from '../aiInterpreter.js';
+import type { DeterministicReadinessResult, RiskInterpretation, TradeMaterialCoordinationResult } from '../types.js';
 
 function ctx() {
   return { companyId: 'company-1', projectId: 'project-1', correlationId: newCorrelationId() };

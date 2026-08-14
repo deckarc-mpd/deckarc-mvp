@@ -1,10 +1,10 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../memoryRepository.ts';
-import { AuditLog, newCorrelationId } from '../audit.ts';
-import { emitScheduleEvent } from '../events.ts';
-import { WorkflowEngine, type SopHandler } from '../workflow.ts';
-import { ToolRegistry } from '../tools.ts';
+import { MemoryRepository } from '../memoryRepository.js';
+import { AuditLog, newCorrelationId } from '../audit.js';
+import { emitScheduleEvent } from '../events.js';
+import { WorkflowEngine, type SopHandler } from '../workflow.js';
+import { ToolRegistry } from '../tools.js';
 
 function ctx() {
   return { companyId: 'company-1', projectId: 'project-1', correlationId: newCorrelationId() };

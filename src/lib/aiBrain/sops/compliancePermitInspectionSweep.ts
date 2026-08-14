@@ -19,15 +19,15 @@
 // verification step below independently re-derives finalStatus and fails
 // the run if it ever diverges from what readinessGates.ts computed).
 
-import { callTool } from '../tools.ts';
-import { evaluateAuthority } from '../policy.ts';
-import { getAgentOrThrow } from '../registry.ts';
+import { callTool } from '../tools.js';
+import { evaluateAuthority } from '../policy.js';
+import { getAgentOrThrow } from '../registry.js';
 import {
   computeComplianceReadinessTool,
   createInterpretComplianceFindingTool,
   type ComputeComplianceReadinessArgs,
-} from '../tools/complianceTools.ts';
-import type { ComplianceInterpreterClient, ComplianceInterpretInput } from '../domains/compliance/aiInterpreter.ts';
+} from '../tools/complianceTools.js';
+import type { ComplianceInterpreterClient, ComplianceInterpretInput } from '../domains/compliance/aiInterpreter.js';
 import type {
   ReadinessPermit,
   ReadinessInspection,
@@ -35,8 +35,8 @@ import type {
   DeterministicComplianceResult,
   ComplianceInterpretation,
   ProjectComplianceAssessment,
-} from '../domains/compliance/types.ts';
-import type { SopExecutionContext, SopOutcome } from '../workflow.ts';
+} from '../domains/compliance/types.js';
+import type { SopExecutionContext, SopOutcome } from '../workflow.js';
 
 export interface CompliancePermitInspectionSweepPayload {
   projectId: string;

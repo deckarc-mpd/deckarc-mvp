@@ -13,18 +13,18 @@
 // admin approval before use — this SOP never sends anything itself; no
 // email/CRM integration exists yet (ADR-CP360-AI-001).
 
-import { callTool } from '../tools.ts';
-import { evaluateAuthority } from '../policy.ts';
-import { getAgentOrThrow } from '../registry.ts';
+import { callTool } from '../tools.js';
+import { evaluateAuthority } from '../policy.js';
+import { getAgentOrThrow } from '../registry.js';
 import {
   identifyStaleLeadsTool,
   createDraftLeadFollowupTool,
   type IdentifyStaleLeadsArgs,
   type DraftLeadFollowupArgs,
-} from '../tools/salesTools.ts';
-import { validateFollowUpGroundedness, type FollowUpDraftClient } from '../domains/sales/followUpDraftClient.ts';
-import type { ReadinessLead, StaleLeadFinding, LeadFollowUpDraft } from '../domains/sales/types.ts';
-import type { SopExecutionContext, SopOutcome } from '../workflow.ts';
+} from '../tools/salesTools.js';
+import { validateFollowUpGroundedness, type FollowUpDraftClient } from '../domains/sales/followUpDraftClient.js';
+import type { ReadinessLead, StaleLeadFinding, LeadFollowUpDraft } from '../domains/sales/types.js';
+import type { SopExecutionContext, SopOutcome } from '../workflow.js';
 
 export interface SalesPipelineHygienePayload {
   asOfDate: string;

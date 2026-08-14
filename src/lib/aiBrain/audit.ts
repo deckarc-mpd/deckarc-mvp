@@ -4,7 +4,7 @@
 // consistently (Frozen §12: "everything is correlated through company_id +
 // project_id + workflow_id + correlation_id").
 
-import type { AiBrainRepository } from './repository.ts';
+import type { AiBrainRepository } from './repository.js';
 import type {
   CorrelationKeys,
   EventEnvelope,
@@ -19,7 +19,7 @@ import type {
   StateChangeRecord,
   HumanOverrideRecord,
   VerificationRecord,
-} from './types.ts';
+} from './types.js';
 
 export function newCorrelationId(): string {
   return crypto.randomUUID();

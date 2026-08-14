@@ -5,8 +5,8 @@ import {
   checkInspectionReadinessGate,
   checkCoiW9Gate,
   assessComplianceReadiness,
-} from '../readinessGates.ts';
-import type { ReadinessPermit, ReadinessInspection, ReadinessComplianceDocument } from '../types.ts';
+} from '../readinessGates.js';
+import type { ReadinessPermit, ReadinessInspection, ReadinessComplianceDocument } from '../types.js';
 
 const TODAY = '2026-08-13';
 

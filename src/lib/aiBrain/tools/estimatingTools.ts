@@ -6,15 +6,15 @@
 // never pricing data, and never returns anything about price (Frozen §7:
 // final price authorization is human-only).
 
-import type { ToolDefinition } from '../tools.ts';
-import { findComparableProjects, computePricingRecommendation } from '../domains/estimating/comparableHistory.ts';
-import type { ScopeInterpreterClient } from '../domains/estimating/scopeInterpreter.ts';
+import type { ToolDefinition } from '../tools.js';
+import { findComparableProjects, computePricingRecommendation } from '../domains/estimating/comparableHistory.js';
+import type { ScopeInterpreterClient } from '../domains/estimating/scopeInterpreter.js';
 import type {
   ReadinessCompletedProject,
   ReadinessCostEntry,
   PricingRecommendation,
   ScopeNormalizationResult,
-} from '../domains/estimating/types.ts';
+} from '../domains/estimating/types.js';
 
 // ─── find_comparable_pricing (CODE tier) ────────────────────────────────────
 

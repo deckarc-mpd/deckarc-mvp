@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { identifyStaleLeads } from '../staleLeadRules.ts';
-import type { ReadinessLead } from '../types.ts';
+import { identifyStaleLeads } from '../staleLeadRules.js';
+import type { ReadinessLead } from '../types.js';
 
 const TODAY = '2026-08-13';
 

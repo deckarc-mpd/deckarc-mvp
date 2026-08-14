@@ -5,8 +5,8 @@ import {
   assessMaterialScheduleRisk,
   decideEscalation,
   assessTradeMaterialCoordination,
-} from '../tradeMaterialCoordination.ts';
-import type { ReadinessTask, ReadinessCrewConfirmation, ReadinessMaterial } from '../types.ts';
+} from '../tradeMaterialCoordination.js';
+import type { ReadinessTask, ReadinessCrewConfirmation, ReadinessMaterial } from '../types.js';
 
 const TOMORROW = '2026-08-13';
 

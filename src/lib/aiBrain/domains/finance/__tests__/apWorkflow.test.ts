@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { assessApStatus } from '../apWorkflow.ts';
-import type { ReadinessVendorBill } from '../types.ts';
+import { assessApStatus } from '../apWorkflow.js';
+import type { ReadinessVendorBill } from '../types.js';
 
 const TODAY = '2026-08-13';
 

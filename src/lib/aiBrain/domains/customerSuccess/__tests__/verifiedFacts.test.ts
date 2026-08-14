@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { gatherVerifiedClientFacts, shouldDraftClientCommunication } from '../verifiedFacts.ts';
-import type { ReadinessDecision, ReadinessDelayReason } from '../types.ts';
+import { gatherVerifiedClientFacts, shouldDraftClientCommunication } from '../verifiedFacts.js';
+import type { ReadinessDecision, ReadinessDelayReason } from '../types.js';
 
 function decision(overrides: Partial<ReadinessDecision>): ReadinessDecision {
   return { id: 'd1', project_id: 'p1', decision_title: 'Countertop selection', needed_by_date: '2026-08-20', status: 'Needed', ...overrides };

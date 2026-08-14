@@ -8,16 +8,16 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../../../memoryRepository.ts';
-import { AuditLog, newCorrelationId } from '../../../audit.ts';
-import { emitScheduleEvent } from '../../../events.ts';
-import { WorkflowEngine } from '../../../workflow.ts';
-import { ToolRegistry } from '../../../tools.ts';
-import { seedMemoryRegistry } from '../../../registry.ts';
-import { createBillingArMarginSweepHandler } from '../../../sops/billingArMarginSweep.ts';
-import { DeterministicFinanceInterpreter } from '../aiInterpreter.ts';
-import { REPRESENTATIVE_FINANCE_PROJECTS } from '../__fixtures__/representativeProjects.ts';
-import type { BillingArMarginSweepPayload } from '../../../sops/billingArMarginSweep.ts';
+import { MemoryRepository } from '../../../memoryRepository.js';
+import { AuditLog, newCorrelationId } from '../../../audit.js';
+import { emitScheduleEvent } from '../../../events.js';
+import { WorkflowEngine } from '../../../workflow.js';
+import { ToolRegistry } from '../../../tools.js';
+import { seedMemoryRegistry } from '../../../registry.js';
+import { createBillingArMarginSweepHandler } from '../../../sops/billingArMarginSweep.js';
+import { DeterministicFinanceInterpreter } from '../aiInterpreter.js';
+import { REPRESENTATIVE_FINANCE_PROJECTS } from '../__fixtures__/representativeProjects.js';
+import type { BillingArMarginSweepPayload } from '../../../sops/billingArMarginSweep.js';
 
 test('exit gate coverage: every representative project has an expectation', () => {
   assert.ok(REPRESENTATIVE_FINANCE_PROJECTS.length >= 3 && REPRESENTATIVE_FINANCE_PROJECTS.length <= 5);

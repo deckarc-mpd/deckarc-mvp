@@ -2,7 +2,7 @@
 // ("client updates use verified facts and have a low human edit rate") —
 // same role as Phase 2/3's representativeProjects.ts fixtures.
 
-import type { ReadinessDecision, ReadinessDelayReason } from '../types.ts';
+import type { ReadinessDecision, ReadinessDelayReason } from '../types.js';
 
 export interface RepresentativeScenario {
   name: string;

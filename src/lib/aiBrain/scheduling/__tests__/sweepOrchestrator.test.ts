@@ -1,14 +1,14 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../../memoryRepository.ts';
-import { AuditLog, newCorrelationId } from '../../audit.ts';
-import { WorkflowEngine } from '../../workflow.ts';
-import { ToolRegistry } from '../../tools.ts';
-import { seedMemoryRegistry } from '../../registry.ts';
-import { DeterministicRiskInterpreter } from '../../domains/projectOps/aiInterpreter.ts';
-import { REPRESENTATIVE_PROJECTS, TOMORROW } from '../../domains/projectOps/__fixtures__/representativeProjects.ts';
-import { defaultScheduleConfig } from '../schedulingConfig.ts';
-import { runTomorrowReadinessSweep, runTradeMaterialCoordinationSweep, runDailyOperatingSweeps, type SweepProjectInput } from '../sweepOrchestrator.ts';
+import { MemoryRepository } from '../../memoryRepository.js';
+import { AuditLog, newCorrelationId } from '../../audit.js';
+import { WorkflowEngine } from '../../workflow.js';
+import { ToolRegistry } from '../../tools.js';
+import { seedMemoryRegistry } from '../../registry.js';
+import { DeterministicRiskInterpreter } from '../../domains/projectOps/aiInterpreter.js';
+import { REPRESENTATIVE_PROJECTS, TOMORROW } from '../../domains/projectOps/__fixtures__/representativeProjects.js';
+import { defaultScheduleConfig } from '../schedulingConfig.js';
+import { runTomorrowReadinessSweep, runTradeMaterialCoordinationSweep, runDailyOperatingSweeps, type SweepProjectInput } from '../sweepOrchestrator.js';
 
 function harness() {
   const repo = new MemoryRepository();

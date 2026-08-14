@@ -4,7 +4,7 @@
 // module only ever proposes a range from real historical data, never a
 // single authorized number.
 
-import type { ReadinessCompletedProject, ReadinessCostEntry, ComparableProject, PricingRecommendation } from './types.ts';
+import type { ReadinessCompletedProject, ReadinessCostEntry, ComparableProject, PricingRecommendation } from './types.js';
 
 /** Fewer than this many real comparables and a range would be a guess dressed up as data, not a recommendation. */
 export const MIN_COMPARABLES_FOR_RECOMMENDATION = 2;

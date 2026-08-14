@@ -2,7 +2,7 @@
 // payment_milestones — DeckArc's only real AR table — and both are pure
 // date/status math. No LLM anywhere in this file.
 
-import type { ReadinessPaymentMilestone, BillingFinding, CollectionsFinding, AgingBucket } from './types.ts';
+import type { ReadinessPaymentMilestone, BillingFinding, CollectionsFinding, AgingBucket } from './types.js';
 
 const BILLING_READY_STATUSES = new Set(['Due', 'Due Today']);
 const CLOSED_STATUSES = new Set(['Paid', 'Waived']);

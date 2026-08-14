@@ -12,7 +12,7 @@
 // check as a workflow failure, not a warning — an ungrounded draft never
 // reaches a human as if it were trustworthy.
 
-import type { ClientCommunicationCandidate, ClientCommunicationDraft } from './types.ts';
+import type { ClientCommunicationCandidate, ClientCommunicationDraft } from './types.js';
 
 function anchor(candidate: ClientCommunicationCandidate, label: string): string {
   return candidate.anchors.find((a) => a.label === label)?.value ?? '';

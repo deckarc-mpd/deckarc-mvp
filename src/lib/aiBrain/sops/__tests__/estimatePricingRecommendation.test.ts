@@ -6,15 +6,15 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../../memoryRepository.ts';
-import { AuditLog, newCorrelationId } from '../../audit.ts';
-import { emitScheduleEvent } from '../../events.ts';
-import { WorkflowEngine } from '../../workflow.ts';
-import { ToolRegistry } from '../../tools.ts';
-import { seedMemoryRegistry } from '../../registry.ts';
-import { createEstimatePricingRecommendationHandler, type EstimatePricingRecommendationPayload } from '../estimatePricingRecommendation.ts';
-import { DeterministicScopeInterpreter } from '../../domains/estimating/scopeInterpreter.ts';
-import type { ReadinessCompletedProject, ReadinessCostEntry } from '../../domains/estimating/types.ts';
+import { MemoryRepository } from '../../memoryRepository.js';
+import { AuditLog, newCorrelationId } from '../../audit.js';
+import { emitScheduleEvent } from '../../events.js';
+import { WorkflowEngine } from '../../workflow.js';
+import { ToolRegistry } from '../../tools.js';
+import { seedMemoryRegistry } from '../../registry.js';
+import { createEstimatePricingRecommendationHandler, type EstimatePricingRecommendationPayload } from '../estimatePricingRecommendation.js';
+import { DeterministicScopeInterpreter } from '../../domains/estimating/scopeInterpreter.js';
+import type { ReadinessCompletedProject, ReadinessCostEntry } from '../../domains/estimating/types.js';
 
 function buildHarness() {
   const repo = new MemoryRepository();

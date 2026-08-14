@@ -17,7 +17,7 @@
 // relevant exceptions?") — most readiness checks have nothing ambiguous to
 // explain and must cost zero AI calls, per §11's "AI only for exceptions."
 
-import type { DeterministicReadinessResult, RiskInterpretation } from './types.ts';
+import type { DeterministicReadinessResult, RiskInterpretation } from './types.js';
 
 export interface RiskInterpretInput {
   deterministic: DeterministicReadinessResult;

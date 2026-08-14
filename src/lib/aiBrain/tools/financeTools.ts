@@ -3,8 +3,8 @@
 // read-only: neither writes to a CP360 table, neither moves money, and
 // neither needs a dry-run mode.
 
-import type { ToolDefinition } from '../tools.ts';
-import { assessFinanceReadiness } from '../domains/finance/financeAssessment.ts';
+import type { ToolDefinition } from '../tools.js';
+import { assessFinanceReadiness } from '../domains/finance/financeAssessment.js';
 import type {
   ReadinessPaymentMilestone,
   ReadinessVendorBill,
@@ -12,8 +12,8 @@ import type {
   ReadinessChangeOrder,
   DeterministicFinanceResult,
   FinanceInterpretation,
-} from '../domains/finance/types.ts';
-import type { FinanceInterpreterClient, FinanceInterpretInput } from '../domains/finance/aiInterpreter.ts';
+} from '../domains/finance/types.js';
+import type { FinanceInterpreterClient, FinanceInterpretInput } from '../domains/finance/aiInterpreter.js';
 
 // ─── compute_finance_assessment (CODE tier) ─────────────────────────────────
 

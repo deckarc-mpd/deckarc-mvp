@@ -5,10 +5,10 @@
 // narrow StaleLeadFinding it's handed — see followUpDraftClient.ts's
 // header for why that boundary matters.
 
-import type { ToolDefinition } from '../tools.ts';
-import { identifyStaleLeads } from '../domains/sales/staleLeadRules.ts';
-import type { FollowUpDraftClient } from '../domains/sales/followUpDraftClient.ts';
-import type { ReadinessLead, StaleLeadFinding, LeadFollowUpDraft } from '../domains/sales/types.ts';
+import type { ToolDefinition } from '../tools.js';
+import { identifyStaleLeads } from '../domains/sales/staleLeadRules.js';
+import type { FollowUpDraftClient } from '../domains/sales/followUpDraftClient.js';
+import type { ReadinessLead, StaleLeadFinding, LeadFollowUpDraft } from '../domains/sales/types.js';
 
 // ─── identify_stale_leads (CODE tier) ───────────────────────────────────────
 

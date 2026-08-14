@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { summarizeCostsByCategory, computeProjectMargin, MARGIN_WARNING_PERCENT } from '../marginCostEngine.ts';
-import type { ReadinessCostEntry, ReadinessChangeOrder } from '../types.ts';
+import { summarizeCostsByCategory, computeProjectMargin, MARGIN_WARNING_PERCENT } from '../marginCostEngine.js';
+import type { ReadinessCostEntry, ReadinessChangeOrder } from '../types.js';
 
 function costEntry(overrides: Partial<ReadinessCostEntry>): ReadinessCostEntry {
   return { id: 'c1', project_id: 'proj-1', category: 'Material', amount: 1000, source: 'material', ...overrides };

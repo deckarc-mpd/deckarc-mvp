@@ -1,13 +1,13 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../../memoryRepository.ts';
-import { AuditLog, newCorrelationId } from '../../audit.ts';
-import { WorkflowEngine } from '../../workflow.ts';
-import { ToolRegistry } from '../../tools.ts';
-import { seedMemoryRegistry } from '../../registry.ts';
-import { DeterministicFinanceInterpreter } from '../../domains/finance/aiInterpreter.ts';
-import { defaultScheduleConfig } from '../schedulingConfig.ts';
-import { runBillingArMarginSweep, type FinanceSweepProjectInput } from '../sweepOrchestrator.ts';
+import { MemoryRepository } from '../../memoryRepository.js';
+import { AuditLog, newCorrelationId } from '../../audit.js';
+import { WorkflowEngine } from '../../workflow.js';
+import { ToolRegistry } from '../../tools.js';
+import { seedMemoryRegistry } from '../../registry.js';
+import { DeterministicFinanceInterpreter } from '../../domains/finance/aiInterpreter.js';
+import { defaultScheduleConfig } from '../schedulingConfig.js';
+import { runBillingArMarginSweep, type FinanceSweepProjectInput } from '../sweepOrchestrator.js';
 
 test('sweeps every eligible project, skips ineligible ones, and always records a summary', async () => {
   const repo = new MemoryRepository();

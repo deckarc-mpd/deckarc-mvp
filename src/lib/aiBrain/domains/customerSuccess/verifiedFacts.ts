@@ -10,7 +10,7 @@ import type {
   ReadinessDelayReason,
   ClientCommunicationCandidate,
   VerifiedClientFacts,
-} from './types.ts';
+} from './types.js';
 
 const CLOSED_DECISION_STATUSES = new Set(['Approved', 'Received']);
 

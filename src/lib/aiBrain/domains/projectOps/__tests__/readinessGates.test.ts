@@ -6,13 +6,13 @@ import {
   checkSubcontractorGate,
   checkMaterialsGate,
   assessTomorrowReadiness,
-} from '../readinessGates.ts';
+} from '../readinessGates.js';
 import type {
   ReadinessTask,
   ReadinessCrewConfirmation,
   ReadinessMaterial,
   ReadinessDailyUpdate,
-} from '../types.ts';
+} from '../types.js';
 
 const TOMORROW = '2026-08-13';
 

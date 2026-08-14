@@ -2,7 +2,7 @@
 // exceptions match human review, with no unauthorized consequential
 // action"), same role as Compliance's representativeProjects.ts.
 
-import type { ReadinessPaymentMilestone, ReadinessVendorBill, ReadinessCostEntry, ReadinessChangeOrder, FinanceOverallStatus } from '../types.ts';
+import type { ReadinessPaymentMilestone, ReadinessVendorBill, ReadinessCostEntry, ReadinessChangeOrder, FinanceOverallStatus } from '../types.js';
 
 const TODAY = '2026-08-13';
 

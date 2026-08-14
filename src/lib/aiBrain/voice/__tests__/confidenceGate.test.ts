@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { requiresReadBackConfirmation } from '../confidenceGate.ts';
-import type { ClassifiedIntent } from '../types.ts';
+import { requiresReadBackConfirmation } from '../confidenceGate.js';
+import type { ClassifiedIntent } from '../types.js';
 
 function intent(overrides: Partial<ClassifiedIntent> = {}): ClassifiedIntent {
   return {

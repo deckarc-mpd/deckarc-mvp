@@ -3,16 +3,16 @@
 // Both read-only, same discipline as projectOpsTools.ts: neither writes to
 // a CP360 table, so neither needs a dry-run mode.
 
-import type { ToolDefinition } from '../tools.ts';
-import { assessComplianceReadiness } from '../domains/compliance/readinessGates.ts';
+import type { ToolDefinition } from '../tools.js';
+import { assessComplianceReadiness } from '../domains/compliance/readinessGates.js';
 import type {
   ReadinessPermit,
   ReadinessInspection,
   ReadinessComplianceDocument,
   DeterministicComplianceResult,
   ComplianceInterpretation,
-} from '../domains/compliance/types.ts';
-import type { ComplianceInterpreterClient, ComplianceInterpretInput } from '../domains/compliance/aiInterpreter.ts';
+} from '../domains/compliance/types.js';
+import type { ComplianceInterpreterClient, ComplianceInterpretInput } from '../domains/compliance/aiInterpreter.js';
 
 // ─── compute_compliance_readiness (CODE tier) ───────────────────────────────
 

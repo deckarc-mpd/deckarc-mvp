@@ -6,7 +6,7 @@
 // attempt to act — below threshold, the turn stops for a read-back instead
 // of guessing.
 
-import type { ClassifiedIntent, TranscribedUtterance } from './types.ts';
+import type { ClassifiedIntent, TranscribedUtterance } from './types.js';
 
 export const STANDARD_CONFIDENCE_THRESHOLD = 0.6;
 export const CONSEQUENTIAL_CONFIDENCE_THRESHOLD = 0.85;

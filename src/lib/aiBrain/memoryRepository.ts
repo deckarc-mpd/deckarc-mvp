@@ -5,8 +5,8 @@
 // logic; supabaseRepository.ts is the wiring for the real deployment and
 // needs to be verified against the live project separately.
 
-import type { AiBrainRepository } from './repository.ts';
-import { VALID_WORKFLOW_TRANSITIONS } from './repository.ts';
+import type { AiBrainRepository } from './repository.js';
+import { VALID_WORKFLOW_TRANSITIONS } from './repository.js';
 import type {
   EventEnvelope,
   NewEvent,
@@ -27,7 +27,7 @@ import type {
   AgentDefinition,
   SopDefinition,
   FeatureFlagState,
-} from './types.ts';
+} from './types.js';
 
 let counter = 0;
 function nextId(prefix: string): string {

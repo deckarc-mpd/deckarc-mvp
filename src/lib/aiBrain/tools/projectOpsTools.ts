@@ -16,9 +16,9 @@
 // `audit`/`workflowRunId`, which breaks the pure (args) -> result contract
 // every other tool in this file follows.
 
-import type { ToolDefinition } from '../tools.ts';
-import { assessTomorrowReadiness } from '../domains/projectOps/readinessGates.ts';
-import { assessTradeMaterialCoordination } from '../domains/projectOps/tradeMaterialCoordination.ts';
+import type { ToolDefinition } from '../tools.js';
+import { assessTomorrowReadiness } from '../domains/projectOps/readinessGates.js';
+import { assessTradeMaterialCoordination } from '../domains/projectOps/tradeMaterialCoordination.js';
 import type {
   ReadinessTask,
   ReadinessCrewConfirmation,
@@ -27,8 +27,8 @@ import type {
   DeterministicReadinessResult,
   RiskInterpretation,
   TradeMaterialCoordinationResult,
-} from '../domains/projectOps/types.ts';
-import type { RiskInterpreterClient, RiskInterpretInput } from '../domains/projectOps/aiInterpreter.ts';
+} from '../domains/projectOps/types.js';
+import type { RiskInterpreterClient, RiskInterpretInput } from '../domains/projectOps/aiInterpreter.js';
 
 // ─── compute_tomorrow_readiness (CODE tier) ─────────────────────────────────
 

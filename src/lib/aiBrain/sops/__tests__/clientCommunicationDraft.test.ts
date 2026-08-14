@@ -4,16 +4,16 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../../memoryRepository.ts';
-import { AuditLog, newCorrelationId } from '../../audit.ts';
-import { emitScheduleEvent } from '../../events.ts';
-import { WorkflowEngine } from '../../workflow.ts';
-import { ToolRegistry } from '../../tools.ts';
-import { seedMemoryRegistry } from '../../registry.ts';
-import { createClientCommunicationDraftHandler, type ClientCommunicationDraftPayload } from '../clientCommunicationDraft.ts';
-import { DeterministicDraftClient } from '../../domains/customerSuccess/draftClient.ts';
-import type { DraftClient } from '../../domains/customerSuccess/draftClient.ts';
-import type { ReadinessDecision, ReadinessDelayReason } from '../../domains/customerSuccess/types.ts';
+import { MemoryRepository } from '../../memoryRepository.js';
+import { AuditLog, newCorrelationId } from '../../audit.js';
+import { emitScheduleEvent } from '../../events.js';
+import { WorkflowEngine } from '../../workflow.js';
+import { ToolRegistry } from '../../tools.js';
+import { seedMemoryRegistry } from '../../registry.js';
+import { createClientCommunicationDraftHandler, type ClientCommunicationDraftPayload } from '../clientCommunicationDraft.js';
+import { DeterministicDraftClient } from '../../domains/customerSuccess/draftClient.js';
+import type { DraftClient } from '../../domains/customerSuccess/draftClient.js';
+import type { ReadinessDecision, ReadinessDelayReason } from '../../domains/customerSuccess/types.js';
 
 function buildHarness() {
   const repo = new MemoryRepository();

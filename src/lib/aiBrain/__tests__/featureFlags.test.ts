@@ -1,12 +1,12 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../memoryRepository.ts';
+import { MemoryRepository } from '../memoryRepository.js';
 import {
   isFeatureEnabled,
   isAiBrainEnabledForCompany,
   isCapabilityEnabled,
   AI_BRAIN_FLAG_KEYS,
-} from '../featureFlags.ts';
+} from '../featureFlags.js';
 
 test('an unseeded flag defaults to false (fail-closed), never true', async () => {
   const repo = new MemoryRepository();

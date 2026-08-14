@@ -1,13 +1,13 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../../memoryRepository.ts';
-import { AuditLog, newCorrelationId } from '../../audit.ts';
-import { WorkflowEngine } from '../../workflow.ts';
-import { ToolRegistry } from '../../tools.ts';
-import { seedMemoryRegistry } from '../../registry.ts';
-import { DeterministicFollowUpDraftClient } from '../../domains/sales/followUpDraftClient.ts';
-import { runSalesPipelineHygieneSweep } from '../sweepOrchestrator.ts';
-import type { ReadinessLead } from '../../domains/sales/types.ts';
+import { MemoryRepository } from '../../memoryRepository.js';
+import { AuditLog, newCorrelationId } from '../../audit.js';
+import { WorkflowEngine } from '../../workflow.js';
+import { ToolRegistry } from '../../tools.js';
+import { seedMemoryRegistry } from '../../registry.js';
+import { DeterministicFollowUpDraftClient } from '../../domains/sales/followUpDraftClient.js';
+import { runSalesPipelineHygieneSweep } from '../sweepOrchestrator.js';
+import type { ReadinessLead } from '../../domains/sales/types.js';
 
 test('runs once for the whole company (not per-project), always records a summary', async () => {
   const repo = new MemoryRepository();

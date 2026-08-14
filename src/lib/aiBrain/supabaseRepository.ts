@@ -22,7 +22,7 @@
 // review.
 
 import type { SupabaseClient } from '@supabase/supabase-js';
-import type { AiBrainRepository } from './repository.ts';
+import type { AiBrainRepository } from './repository.js';
 import type {
   EventEnvelope,
   NewEvent,
@@ -46,7 +46,7 @@ import type {
   AgentId,
   AuthorityLevel,
   ExecutionMethod,
-} from './types.ts';
+} from './types.js';
 
 function must<T>(value: T | null | undefined, what: string): T {
   if (value === null || value === undefined) throw new Error(`missing ${what}`);

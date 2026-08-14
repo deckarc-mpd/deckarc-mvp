@@ -15,7 +15,7 @@
 // mirroring how Phase 5 built its own DraftClient rather than reusing
 // Project Ops' interpreter.
 
-import type { DeterministicComplianceResult, ComplianceInterpretation, ComplianceFindingCategory } from './types.ts';
+import type { DeterministicComplianceResult, ComplianceInterpretation, ComplianceFindingCategory } from './types.js';
 
 export interface ComplianceInterpretInput {
   deterministic: DeterministicComplianceResult;

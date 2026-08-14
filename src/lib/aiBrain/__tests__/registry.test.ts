@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../memoryRepository.ts';
+import { MemoryRepository } from '../memoryRepository.js';
 import {
   FROZEN_AGENT_SEED,
   FROZEN_SOP_SEED,
@@ -8,8 +8,8 @@ import {
   getAgentOrThrow,
   getSopOrThrow,
   isFrozenAgentId,
-} from '../registry.ts';
-import { FROZEN_AGENT_IDS } from '../types.ts';
+} from '../registry.js';
+import { FROZEN_AGENT_IDS } from '../types.js';
 
 test('the registry contains exactly the six frozen agents, by stable id', () => {
   assert.equal(FROZEN_AGENT_SEED.length, 6);

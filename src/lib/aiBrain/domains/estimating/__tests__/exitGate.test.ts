@@ -7,16 +7,16 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../../../memoryRepository.ts';
-import { AuditLog, newCorrelationId } from '../../../audit.ts';
-import { emitScheduleEvent } from '../../../events.ts';
-import { WorkflowEngine } from '../../../workflow.ts';
-import { ToolRegistry } from '../../../tools.ts';
-import { seedMemoryRegistry } from '../../../registry.ts';
-import { createEstimatePricingRecommendationHandler } from '../../../sops/estimatePricingRecommendation.ts';
-import { DeterministicScopeInterpreter } from '../scopeInterpreter.ts';
-import { REPRESENTATIVE_ESTIMATE_SCENARIOS } from '../__fixtures__/representativeEstimates.ts';
-import type { EstimatePricingRecommendationPayload } from '../../../sops/estimatePricingRecommendation.ts';
+import { MemoryRepository } from '../../../memoryRepository.js';
+import { AuditLog, newCorrelationId } from '../../../audit.js';
+import { emitScheduleEvent } from '../../../events.js';
+import { WorkflowEngine } from '../../../workflow.js';
+import { ToolRegistry } from '../../../tools.js';
+import { seedMemoryRegistry } from '../../../registry.js';
+import { createEstimatePricingRecommendationHandler } from '../../../sops/estimatePricingRecommendation.js';
+import { DeterministicScopeInterpreter } from '../scopeInterpreter.js';
+import { REPRESENTATIVE_ESTIMATE_SCENARIOS } from '../__fixtures__/representativeEstimates.js';
+import type { EstimatePricingRecommendationPayload } from '../../../sops/estimatePricingRecommendation.js';
 
 test('exit gate coverage: every representative scenario has an expectation', () => {
   assert.ok(REPRESENTATIVE_ESTIMATE_SCENARIOS.length >= 3 && REPRESENTATIVE_ESTIMATE_SCENARIOS.length <= 5);

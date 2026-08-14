@@ -24,23 +24,23 @@
 // the draft is ready for a human to copy and send, not that anything was
 // dispatched automatically.
 
-import { callTool } from '../tools.ts';
-import { evaluateAuthority } from '../policy.ts';
-import { getAgentOrThrow } from '../registry.ts';
+import { callTool } from '../tools.js';
+import { evaluateAuthority } from '../policy.js';
+import { getAgentOrThrow } from '../registry.js';
 import {
   gatherVerifiedClientFactsTool,
   createDraftClientCommunicationTool,
   type GatherVerifiedFactsArgs,
   type DraftClientCommunicationArgs,
-} from '../tools/customerSuccessTools.ts';
-import { validateDraftGroundedness, type DraftClient } from '../domains/customerSuccess/draftClient.ts';
+} from '../tools/customerSuccessTools.js';
+import { validateDraftGroundedness, type DraftClient } from '../domains/customerSuccess/draftClient.js';
 import type {
   ReadinessDecision,
   ReadinessDelayReason,
   VerifiedClientFacts,
   ClientCommunicationDraft,
-} from '../domains/customerSuccess/types.ts';
-import type { SopExecutionContext, SopOutcome } from '../workflow.ts';
+} from '../domains/customerSuccess/types.js';
+import type { SopExecutionContext, SopOutcome } from '../workflow.js';
 
 export interface ClientCommunicationDraftPayload {
   projectId: string;

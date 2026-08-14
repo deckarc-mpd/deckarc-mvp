@@ -21,9 +21,9 @@
 // reads `displayName` for a decision; it exists on AgentDefinition purely
 // for UI presentation.
 
-import type { AiBrainRepository } from './repository.ts';
-import type { AgentDefinition, AgentId, SopDefinition } from './types.ts';
-import { FROZEN_AGENT_IDS } from './types.ts';
+import type { AiBrainRepository } from './repository.js';
+import type { AgentDefinition, AgentId, SopDefinition } from './types.js';
+import { FROZEN_AGENT_IDS } from './types.js';
 
 export const FROZEN_AGENT_SEED: AgentDefinition[] = [
   {

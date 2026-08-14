@@ -2,10 +2,10 @@
 // mirroring tomorrow_readiness_v1's "one SOP, several gates" structure.
 // Every gate here is pure arithmetic/date comparison — no LLM.
 
-import { identifyMilestonesDueForBilling, identifyCollectionsNeeded } from './billingCollections.ts';
-import { assessApStatus } from './apWorkflow.ts';
-import { computeProjectMargin, MARGIN_WARNING_PERCENT } from './marginCostEngine.ts';
-import { computeCashForecast } from './cashForecastEngine.ts';
+import { identifyMilestonesDueForBilling, identifyCollectionsNeeded } from './billingCollections.js';
+import { assessApStatus } from './apWorkflow.js';
+import { computeProjectMargin, MARGIN_WARNING_PERCENT } from './marginCostEngine.js';
+import { computeCashForecast } from './cashForecastEngine.js';
 import type {
   ReadinessPaymentMilestone,
   ReadinessVendorBill,
@@ -14,7 +14,7 @@ import type {
   FinanceGateResult,
   DeterministicFinanceResult,
   FinanceOverallStatus,
-} from './types.ts';
+} from './types.js';
 
 export const CASH_FORECAST_HORIZON_DAYS = 30;
 

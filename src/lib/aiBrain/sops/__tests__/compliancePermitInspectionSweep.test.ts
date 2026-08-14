@@ -5,14 +5,14 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../../memoryRepository.ts';
-import { AuditLog, newCorrelationId } from '../../audit.ts';
-import { emitScheduleEvent } from '../../events.ts';
-import { WorkflowEngine } from '../../workflow.ts';
-import { ToolRegistry } from '../../tools.ts';
-import { seedMemoryRegistry } from '../../registry.ts';
-import { createCompliancePermitInspectionSweepHandler, type CompliancePermitInspectionSweepPayload } from '../compliancePermitInspectionSweep.ts';
-import { DeterministicComplianceInterpreter } from '../../domains/compliance/aiInterpreter.ts';
+import { MemoryRepository } from '../../memoryRepository.js';
+import { AuditLog, newCorrelationId } from '../../audit.js';
+import { emitScheduleEvent } from '../../events.js';
+import { WorkflowEngine } from '../../workflow.js';
+import { ToolRegistry } from '../../tools.js';
+import { seedMemoryRegistry } from '../../registry.js';
+import { createCompliancePermitInspectionSweepHandler, type CompliancePermitInspectionSweepPayload } from '../compliancePermitInspectionSweep.js';
+import { DeterministicComplianceInterpreter } from '../../domains/compliance/aiInterpreter.js';
 
 function buildHarness() {
   const repo = new MemoryRepository();

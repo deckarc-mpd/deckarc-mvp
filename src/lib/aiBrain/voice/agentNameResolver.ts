@@ -7,8 +7,8 @@
 // converting a spoken name into a stable id once, at the boundary, before
 // any SOP/tool call happens.
 
-import { FROZEN_AGENT_SEED } from '../registry.ts';
-import type { AgentId } from '../types.ts';
+import { FROZEN_AGENT_SEED } from '../registry.js';
+import type { AgentId } from '../types.js';
 
 export function resolveSpokenAgentName(text: string): AgentId | null {
   const lower = text.toLowerCase();

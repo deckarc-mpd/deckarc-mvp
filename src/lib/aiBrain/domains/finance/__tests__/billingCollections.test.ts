@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { identifyMilestonesDueForBilling, identifyCollectionsNeeded } from '../billingCollections.ts';
-import type { ReadinessPaymentMilestone } from '../types.ts';
+import { identifyMilestonesDueForBilling, identifyCollectionsNeeded } from '../billingCollections.js';
+import type { ReadinessPaymentMilestone } from '../types.js';
 
 const TODAY = '2026-08-13';
 

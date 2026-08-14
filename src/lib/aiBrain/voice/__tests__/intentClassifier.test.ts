@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { classifyVoiceIntent } from '../intentClassifier.ts';
-import type { VoiceEntityDirectory } from '../types.ts';
+import { classifyVoiceIntent } from '../intentClassifier.js';
+import type { VoiceEntityDirectory } from '../types.js';
 
 const DIRECTORY: VoiceEntityDirectory = {
   projects: [{ id: 'proj-thompson', name: 'Thompson Deck Build' }],

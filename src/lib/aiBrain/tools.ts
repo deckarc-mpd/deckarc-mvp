@@ -18,8 +18,8 @@
 // to guarantee.
 
 import { createHash } from 'node:crypto';
-import type { AuditLog, AuditContext } from './audit.ts';
-import type { ActorRef, ToolCallRecord } from './types.ts';
+import type { AuditLog, AuditContext } from './audit.js';
+import type { ActorRef, ToolCallRecord } from './types.js';
 
 export interface ToolDefinition<TArgs, TResult> {
   name: string;

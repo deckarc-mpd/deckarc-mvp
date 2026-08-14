@@ -14,13 +14,13 @@
 // verification step below independently re-derives that ordering and fails
 // the run if it ever diverges.
 
-import { callTool } from '../tools.ts';
-import { evaluateAuthority } from '../policy.ts';
-import { getAgentOrThrow } from '../registry.ts';
-import { createSynthesizeDailyBriefTool, type SynthesizeDailyBriefArgs } from '../tools/chiefOfStaffTools.ts';
-import { rankExceptions, type SynthesisClient } from '../domains/chiefOfStaff/synthesis.ts';
-import type { ResolvedException, ChiefOfStaffSynthesis } from '../domains/chiefOfStaff/types.ts';
-import type { SopExecutionContext, SopOutcome } from '../workflow.ts';
+import { callTool } from '../tools.js';
+import { evaluateAuthority } from '../policy.js';
+import { getAgentOrThrow } from '../registry.js';
+import { createSynthesizeDailyBriefTool, type SynthesizeDailyBriefArgs } from '../tools/chiefOfStaffTools.js';
+import { rankExceptions, type SynthesisClient } from '../domains/chiefOfStaff/synthesis.js';
+import type { ResolvedException, ChiefOfStaffSynthesis } from '../domains/chiefOfStaff/types.js';
+import type { SopExecutionContext, SopOutcome } from '../workflow.js';
 
 export interface ChiefOfStaffSynthesisPayload {
   asOfDate: string;

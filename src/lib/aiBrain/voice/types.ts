@@ -5,7 +5,7 @@
 // same SOP/tool/policy call a UI action would make," never to decide
 // business outcomes itself. See voiceAdapter.ts's header for the full flow.
 
-import type { AgentId } from '../types.ts';
+import type { AgentId } from '../types.js';
 
 /**
  * "Hear -> transcribe" already happened client-side before this module is

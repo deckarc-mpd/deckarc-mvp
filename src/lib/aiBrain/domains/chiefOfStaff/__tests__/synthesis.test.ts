@@ -5,9 +5,9 @@ import {
   shouldInvokeChiefOfStaffAi,
   synthesizeChiefOfStaffBrief,
   DeterministicSynthesisClient,
-} from '../synthesis.ts';
-import type { SynthesisClient } from '../synthesis.ts';
-import type { ResolvedException, RankedException } from '../types.ts';
+} from '../synthesis.js';
+import type { SynthesisClient } from '../synthesis.js';
+import type { ResolvedException, RankedException } from '../types.js';
 
 function exception(overrides: Partial<ResolvedException>): ResolvedException {
   return { source: 'needs_review_item', id: 'e1', projectId: 'proj-1', title: 'Item', detail: '', ...overrides };

@@ -12,14 +12,14 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../memoryRepository.ts';
-import { AuditLog, newCorrelationId } from '../audit.ts';
-import { emitUiEvent } from '../events.ts';
-import { WorkflowEngine } from '../workflow.ts';
-import { ToolRegistry, type ToolDefinition } from '../tools.ts';
-import { seedMemoryRegistry } from '../registry.ts';
-import { taskDelayCascadeHandler, type TaskDelayReportedPayload } from '../sops/taskDelayCascade.ts';
-import type { CascadeDelayArgs, CascadeDelayResult } from '../tools/cascadeDelayTool.ts';
+import { MemoryRepository } from '../memoryRepository.js';
+import { AuditLog, newCorrelationId } from '../audit.js';
+import { emitUiEvent } from '../events.js';
+import { WorkflowEngine } from '../workflow.js';
+import { ToolRegistry, type ToolDefinition } from '../tools.js';
+import { seedMemoryRegistry } from '../registry.js';
+import { taskDelayCascadeHandler, type TaskDelayReportedPayload } from '../sops/taskDelayCascade.js';
+import type { CascadeDelayArgs, CascadeDelayResult } from '../tools/cascadeDelayTool.js';
 
 function ctx() {
   return { companyId: 'company-1', projectId: 'project-1', correlationId: newCorrelationId() };

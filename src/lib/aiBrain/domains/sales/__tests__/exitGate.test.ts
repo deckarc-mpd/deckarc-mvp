@@ -8,16 +8,16 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../../../memoryRepository.ts';
-import { AuditLog, newCorrelationId } from '../../../audit.ts';
-import { emitScheduleEvent } from '../../../events.ts';
-import { WorkflowEngine } from '../../../workflow.ts';
-import { ToolRegistry } from '../../../tools.ts';
-import { seedMemoryRegistry } from '../../../registry.ts';
-import { createSalesPipelineHygieneHandler } from '../../../sops/salesPipelineHygiene.ts';
-import { DeterministicFollowUpDraftClient } from '../followUpDraftClient.ts';
-import { REPRESENTATIVE_LEAD_SCENARIOS, REPRESENTATIVE_LEADS_ASOF } from '../__fixtures__/representativeLeads.ts';
-import type { SalesPipelineHygienePayload } from '../../../sops/salesPipelineHygiene.ts';
+import { MemoryRepository } from '../../../memoryRepository.js';
+import { AuditLog, newCorrelationId } from '../../../audit.js';
+import { emitScheduleEvent } from '../../../events.js';
+import { WorkflowEngine } from '../../../workflow.js';
+import { ToolRegistry } from '../../../tools.js';
+import { seedMemoryRegistry } from '../../../registry.js';
+import { createSalesPipelineHygieneHandler } from '../../../sops/salesPipelineHygiene.js';
+import { DeterministicFollowUpDraftClient } from '../followUpDraftClient.js';
+import { REPRESENTATIVE_LEAD_SCENARIOS, REPRESENTATIVE_LEADS_ASOF } from '../__fixtures__/representativeLeads.js';
+import type { SalesPipelineHygienePayload } from '../../../sops/salesPipelineHygiene.js';
 
 test('exit gate coverage: every representative scenario has an expectation', () => {
   assert.ok(REPRESENTATIVE_LEAD_SCENARIOS.length >= 3 && REPRESENTATIVE_LEAD_SCENARIOS.length <= 5);

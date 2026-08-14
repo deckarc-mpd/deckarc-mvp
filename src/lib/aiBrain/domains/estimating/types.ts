@@ -8,7 +8,7 @@
 // deterministic lookup over completed projects' contract_amount (Phase 8)
 // and project_cost_entries — not the full cross-domain retrieval system.
 
-import type { ReadinessCostEntry } from '../finance/types.ts';
+import type { ReadinessCostEntry } from '../finance/types.js';
 export type { ReadinessCostEntry };
 
 export interface ReadinessCompletedProject {

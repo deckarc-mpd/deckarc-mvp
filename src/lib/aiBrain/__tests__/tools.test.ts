@@ -1,8 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../memoryRepository.ts';
-import { AuditLog, newCorrelationId } from '../audit.ts';
-import { ToolRegistry, callTool, type ToolDefinition } from '../tools.ts';
+import { MemoryRepository } from '../memoryRepository.js';
+import { AuditLog, newCorrelationId } from '../audit.js';
+import { ToolRegistry, callTool, type ToolDefinition } from '../tools.js';
 
 function ctx() {
   return { companyId: 'company-1', projectId: 'project-1', correlationId: newCorrelationId() };

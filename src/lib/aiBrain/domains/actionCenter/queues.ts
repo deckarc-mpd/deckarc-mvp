@@ -5,8 +5,8 @@
 // handing it in already shaped — this file makes no Supabase call itself,
 // same discipline as the sweep orchestrator and Chief of Staff synthesis.
 
-import type { BoardItemSummary } from '../../../actionBoardHelpers.ts';
-import type { ApprovalRecord, WorkflowRun } from '../../types.ts';
+import type { BoardItemSummary } from '../../../actionBoardHelpers.js';
+import type { ApprovalRecord, WorkflowRun } from '../../types.js';
 
 export type ActionCenterQueueName =
   | 'needs_my_decision'

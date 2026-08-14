@@ -6,15 +6,15 @@
 // see domains/customerSuccess/draftClient.ts's header for why that boundary
 // matters (Frozen §4: "never fabricated status").
 
-import type { ToolDefinition } from '../tools.ts';
-import { gatherVerifiedClientFacts } from '../domains/customerSuccess/verifiedFacts.ts';
-import type { DraftClient } from '../domains/customerSuccess/draftClient.ts';
+import type { ToolDefinition } from '../tools.js';
+import { gatherVerifiedClientFacts } from '../domains/customerSuccess/verifiedFacts.js';
+import type { DraftClient } from '../domains/customerSuccess/draftClient.js';
 import type {
   ReadinessDecision,
   ReadinessDelayReason,
   VerifiedClientFacts,
   ClientCommunicationDraft,
-} from '../domains/customerSuccess/types.ts';
+} from '../domains/customerSuccess/types.js';
 
 // ─── gather_verified_client_facts (CODE tier) ───────────────────────────────
 

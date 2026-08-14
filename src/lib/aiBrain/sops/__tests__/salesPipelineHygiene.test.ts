@@ -3,15 +3,15 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../../memoryRepository.ts';
-import { AuditLog, newCorrelationId } from '../../audit.ts';
-import { emitScheduleEvent } from '../../events.ts';
-import { WorkflowEngine } from '../../workflow.ts';
-import { ToolRegistry } from '../../tools.ts';
-import { seedMemoryRegistry } from '../../registry.ts';
-import { createSalesPipelineHygieneHandler, type SalesPipelineHygienePayload } from '../salesPipelineHygiene.ts';
-import { DeterministicFollowUpDraftClient } from '../../domains/sales/followUpDraftClient.ts';
-import type { FollowUpDraftClient } from '../../domains/sales/followUpDraftClient.ts';
+import { MemoryRepository } from '../../memoryRepository.js';
+import { AuditLog, newCorrelationId } from '../../audit.js';
+import { emitScheduleEvent } from '../../events.js';
+import { WorkflowEngine } from '../../workflow.js';
+import { ToolRegistry } from '../../tools.js';
+import { seedMemoryRegistry } from '../../registry.js';
+import { createSalesPipelineHygieneHandler, type SalesPipelineHygienePayload } from '../salesPipelineHygiene.js';
+import { DeterministicFollowUpDraftClient } from '../../domains/sales/followUpDraftClient.js';
+import type { FollowUpDraftClient } from '../../domains/sales/followUpDraftClient.js';
 
 function buildHarness(client: FollowUpDraftClient = new DeterministicFollowUpDraftClient()) {
   const repo = new MemoryRepository();

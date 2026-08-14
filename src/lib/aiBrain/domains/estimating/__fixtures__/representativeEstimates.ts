@@ -2,7 +2,7 @@
 // exceptions match human review, with no unauthorized consequential
 // action").
 
-import type { ReadinessCompletedProject, ReadinessCostEntry, EstimateAssessmentStatus } from '../types.ts';
+import type { ReadinessCompletedProject, ReadinessCostEntry, EstimateAssessmentStatus } from '../types.js';
 
 export interface RepresentativeEstimateScenario {
   name: string;

@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
-    "test:aibrain": "node --test $(find src/lib/aiBrain -name '*.test.ts')"
+    "test:aibrain": "node --import ./scripts/register-ts-loader-hook.mjs --test $(find src/lib/aiBrain -name '*.test.ts')"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",

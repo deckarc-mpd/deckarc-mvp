@@ -23,15 +23,15 @@
 // final status from the deterministic result and fails the workflow run if
 // it ever diverges from what readinessGates.ts computed).
 
-import { callTool } from '../tools.ts';
-import { evaluateAuthority } from '../policy.ts';
-import { getAgentOrThrow } from '../registry.ts';
+import { callTool } from '../tools.js';
+import { evaluateAuthority } from '../policy.js';
+import { getAgentOrThrow } from '../registry.js';
 import {
   computeTomorrowReadinessTool,
   createInterpretFieldUpdateTool,
   type ComputeReadinessArgs,
-} from '../tools/projectOpsTools.ts';
-import type { RiskInterpreterClient, RiskInterpretInput } from '../domains/projectOps/aiInterpreter.ts';
+} from '../tools/projectOpsTools.js';
+import type { RiskInterpreterClient, RiskInterpretInput } from '../domains/projectOps/aiInterpreter.js';
 import type {
   ReadinessTask,
   ReadinessCrewConfirmation,
@@ -40,8 +40,8 @@ import type {
   DeterministicReadinessResult,
   RiskInterpretation,
   ProjectReadinessAssessment,
-} from '../domains/projectOps/types.ts';
-import type { SopExecutionContext, SopOutcome } from '../workflow.ts';
+} from '../domains/projectOps/types.js';
+import type { SopExecutionContext, SopOutcome } from '../workflow.js';
 
 export interface TomorrowReadinessPayload {
   projectId: string;

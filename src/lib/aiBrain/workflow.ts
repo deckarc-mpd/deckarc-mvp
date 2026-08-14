@@ -12,10 +12,10 @@
 // (Frozen §23.4: "one SOP/workflow system for UI, scheduler, voice, email
 // and API triggers").
 
-import type { AuditLog, AuditContext } from './audit.ts';
-import type { AiBrainRepository } from './repository.ts';
-import type { ToolRegistry } from './tools.ts';
-import type { EventEnvelope, WorkflowRun } from './types.ts';
+import type { AuditLog, AuditContext } from './audit.js';
+import type { AiBrainRepository } from './repository.js';
+import type { ToolRegistry } from './tools.js';
+import type { EventEnvelope, WorkflowRun } from './types.js';
 
 export interface SopExecutionContext {
   ctx: AuditContext;

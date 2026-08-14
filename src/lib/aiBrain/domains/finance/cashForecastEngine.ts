@@ -2,7 +2,7 @@
 // projection of expected AR inflows minus AP outflows over a horizon — no
 // LLM, no bank connection, no payment movement of any kind.
 
-import type { ReadinessPaymentMilestone, ReadinessVendorBill, CashForecastResult } from './types.ts';
+import type { ReadinessPaymentMilestone, ReadinessVendorBill, CashForecastResult } from './types.js';
 
 const CLOSED_MILESTONE_STATUSES = new Set(['Paid', 'Waived']);
 

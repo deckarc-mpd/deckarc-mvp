@@ -24,11 +24,11 @@
 // the unit test in __tests__/taskDelayCascade.test.ts using a mock tool
 // standing in for the real cascade_delay tool's dry-run/real-run contract.
 
-import { callTool } from '../tools.ts';
-import { evaluateAuthority } from '../policy.ts';
-import { getAgentOrThrow } from '../registry.ts';
-import type { SopExecutionContext, SopOutcome } from '../workflow.ts';
-import type { CascadeDelayArgs, CascadeDelayResult } from '../tools/cascadeDelayTool.ts';
+import { callTool } from '../tools.js';
+import { evaluateAuthority } from '../policy.js';
+import { getAgentOrThrow } from '../registry.js';
+import type { SopExecutionContext, SopOutcome } from '../workflow.js';
+import type { CascadeDelayArgs, CascadeDelayResult } from '../tools/cascadeDelayTool.js';
 
 export interface TaskDelayReportedPayload {
   projectId: string;

@@ -6,10 +6,10 @@
 // that boundary matters (Frozen §8: "prioritization and decision framing,
 // not routing logic").
 
-import type { ToolDefinition } from '../tools.ts';
-import { synthesizeChiefOfStaffBrief } from '../domains/chiefOfStaff/synthesis.ts';
-import type { SynthesisClient } from '../domains/chiefOfStaff/synthesis.ts';
-import type { ResolvedException, ChiefOfStaffSynthesis } from '../domains/chiefOfStaff/types.ts';
+import type { ToolDefinition } from '../tools.js';
+import { synthesizeChiefOfStaffBrief } from '../domains/chiefOfStaff/synthesis.js';
+import type { SynthesisClient } from '../domains/chiefOfStaff/synthesis.js';
+import type { ResolvedException, ChiefOfStaffSynthesis } from '../domains/chiefOfStaff/types.js';
 
 export interface SynthesizeDailyBriefArgs {
   exceptions: ResolvedException[];

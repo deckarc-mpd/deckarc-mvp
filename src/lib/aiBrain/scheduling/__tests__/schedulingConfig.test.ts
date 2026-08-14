@@ -8,7 +8,7 @@ import {
   isBusinessDay,
   isProjectEligibleForSweep,
   isWithinSweepWindow,
-} from '../schedulingConfig.ts';
+} from '../schedulingConfig.js';
 
 // 2026-08-12T16:00:00Z is a Wednesday in both America/New_York (12:00 EDT)
 // and America/Los_Angeles (09:00 PDT) — verified independently via node's

@@ -6,8 +6,8 @@
 // put it. Entity resolution matches spoken text against a directory loaded
 // from canonical CP360 state — it never invents a project/task id.
 
-import { resolveSpokenAgentName } from './agentNameResolver.ts';
-import type { ClassifiedIntent, VoiceEntityDirectory } from './types.ts';
+import { resolveSpokenAgentName } from './agentNameResolver.js';
+import type { ClassifiedIntent, VoiceEntityDirectory } from './types.js';
 
 const APPROVE_KEYWORDS = ['approve', 'approved', 'confirm', 'yes, do it', 'go ahead'];
 const REJECT_KEYWORDS = ['reject', 'cancel that', "don't do it", 'deny', 'no, cancel'];

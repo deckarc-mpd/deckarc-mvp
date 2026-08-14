@@ -1,14 +1,14 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../../memoryRepository.ts';
-import { AuditLog, newCorrelationId } from '../../audit.ts';
-import { WorkflowEngine } from '../../workflow.ts';
-import { ToolRegistry } from '../../tools.ts';
-import { seedMemoryRegistry } from '../../registry.ts';
-import { DeterministicComplianceInterpreter } from '../../domains/compliance/aiInterpreter.ts';
-import { defaultScheduleConfig } from '../schedulingConfig.ts';
-import { runCompliancePermitInspectionSweep, type ComplianceSweepProjectInput } from '../sweepOrchestrator.ts';
-import type { ReadinessComplianceDocument } from '../../domains/compliance/types.ts';
+import { MemoryRepository } from '../../memoryRepository.js';
+import { AuditLog, newCorrelationId } from '../../audit.js';
+import { WorkflowEngine } from '../../workflow.js';
+import { ToolRegistry } from '../../tools.js';
+import { seedMemoryRegistry } from '../../registry.js';
+import { DeterministicComplianceInterpreter } from '../../domains/compliance/aiInterpreter.js';
+import { defaultScheduleConfig } from '../schedulingConfig.js';
+import { runCompliancePermitInspectionSweep, type ComplianceSweepProjectInput } from '../sweepOrchestrator.js';
+import type { ReadinessComplianceDocument } from '../../domains/compliance/types.js';
 
 function harness() {
   const repo = new MemoryRepository();

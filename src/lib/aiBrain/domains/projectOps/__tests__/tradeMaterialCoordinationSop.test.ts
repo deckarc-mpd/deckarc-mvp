@@ -1,22 +1,22 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { MemoryRepository } from '../../../memoryRepository.ts';
-import { AuditLog, newCorrelationId } from '../../../audit.ts';
-import { emitScheduleEvent } from '../../../events.ts';
-import { WorkflowEngine } from '../../../workflow.ts';
-import type { SopExecutionContext, SopOutcome } from '../../../workflow.ts';
-import { ToolRegistry, callTool } from '../../../tools.ts';
-import { seedMemoryRegistry } from '../../../registry.ts';
-import { createTradeMaterialCoordinationHandler } from '../../../sops/tradeMaterialCoordination.ts';
+import { MemoryRepository } from '../../../memoryRepository.js';
+import { AuditLog, newCorrelationId } from '../../../audit.js';
+import { emitScheduleEvent } from '../../../events.js';
+import { WorkflowEngine } from '../../../workflow.js';
+import type { SopExecutionContext, SopOutcome } from '../../../workflow.js';
+import { ToolRegistry, callTool } from '../../../tools.js';
+import { seedMemoryRegistry } from '../../../registry.js';
+import { createTradeMaterialCoordinationHandler } from '../../../sops/tradeMaterialCoordination.js';
 import {
   assessTradeMaterialCoordinationTool,
   createInterpretFieldUpdateTool,
   type AssessTradeMaterialArgs,
-} from '../../../tools/projectOpsTools.ts';
-import { DeterministicRiskInterpreter } from '../aiInterpreter.ts';
-import { REPRESENTATIVE_PROJECTS } from '../__fixtures__/representativeProjects.ts';
-import type { TradeMaterialCoordinationPayload } from '../../../sops/tradeMaterialCoordination.ts';
-import type { TradeMaterialCoordinationResult } from '../types.ts';
+} from '../../../tools/projectOpsTools.js';
+import { DeterministicRiskInterpreter } from '../aiInterpreter.js';
+import { REPRESENTATIVE_PROJECTS } from '../__fixtures__/representativeProjects.js';
+import type { TradeMaterialCoordinationPayload } from '../../../sops/tradeMaterialCoordination.js';
+import type { TradeMaterialCoordinationResult } from '../types.js';
 
 function buildHarness() {
   const repo = new MemoryRepository();

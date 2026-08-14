@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { DeterministicDraftClient, validateDraftGroundedness } from '../draftClient.ts';
-import type { ClientCommunicationCandidate } from '../types.ts';
+import { DeterministicDraftClient, validateDraftGroundedness } from '../draftClient.js';
+import type { ClientCommunicationCandidate } from '../types.js';
 
 function decisionCandidate(overrides: Partial<ClientCommunicationCandidate> = {}): ClientCommunicationCandidate {
   return {

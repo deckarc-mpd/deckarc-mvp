@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { DeterministicFollowUpDraftClient, validateFollowUpGroundedness } from '../followUpDraftClient.ts';
-import type { StaleLeadFinding } from '../types.ts';
+import { DeterministicFollowUpDraftClient, validateFollowUpGroundedness } from '../followUpDraftClient.js';
+import type { StaleLeadFinding } from '../types.js';
 
 function finding(overrides: Partial<StaleLeadFinding> = {}): StaleLeadFinding {
   return { leadId: 'l1', fullName: 'Jordan Reyes', companyName: 'Reyes Construction', status: 'new', daysSinceCreated: 5, ...overrides };

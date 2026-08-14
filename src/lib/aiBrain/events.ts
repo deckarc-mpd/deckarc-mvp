@@ -15,8 +15,8 @@
 // event type" — that decision belongs to whatever is listening, not to the
 // event abstraction itself.
 
-import type { AuditLog, AuditContext } from './audit.ts';
-import type { ActorRef, EventEnvelope } from './types.ts';
+import type { AuditLog, AuditContext } from './audit.js';
+import type { ActorRef, EventEnvelope } from './types.js';
 
 export interface EmitOptions {
   payloadVersion?: string;

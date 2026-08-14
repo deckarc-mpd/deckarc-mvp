@@ -4,7 +4,7 @@
 // explicit that no autonomous bank or payment movement exists in this
 // phase, and there is no write path here at all, not even a gated one.
 
-import type { ReadinessVendorBill, ApFinding } from './types.ts';
+import type { ReadinessVendorBill, ApFinding } from './types.js';
 
 export function assessApStatus(asOfDate: string, bills: ReadinessVendorBill[]): ApFinding[] {
   const findings: ApFinding[] = [];

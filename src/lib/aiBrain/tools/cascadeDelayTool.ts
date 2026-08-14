@@ -9,8 +9,8 @@
 // verifying it end-to-end against real project/task data is a prerequisite
 // before this tool is used for anything beyond Phase 1 review.
 
-import { cascadeDelayFromTask } from '../../scheduleEngine.ts';
-import type { ToolDefinition } from '../tools.ts';
+import { cascadeDelayFromTask } from '../../scheduleEngine.js';
+import type { ToolDefinition } from '../tools.js';
 
 export interface CascadeDelayArgs {
   projectId: string;

@@ -6,7 +6,7 @@
 // the time this ever runs. FinanceInterpretation has no numeric field at
 // all, so there is nothing here to override even by accident.
 
-import type { DeterministicFinanceResult, FinanceInterpretation, FinanceFindingCategory } from './types.ts';
+import type { DeterministicFinanceResult, FinanceInterpretation, FinanceFindingCategory } from './types.js';
 
 export interface FinanceInterpretInput {
   deterministic: DeterministicFinanceResult;
