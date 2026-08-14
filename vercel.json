@@ -9,7 +9,7 @@
   "crons": [
     {
       "path": "/api/cron/scheduled-sweep",
-      "schedule": "0 * * * *"
+      "schedule": "0 13 * * *"
     }
   ]
 }
