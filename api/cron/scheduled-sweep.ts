@@ -115,10 +115,15 @@ export default async function handler(req: Request): Promise<Response> {
   const audit = new AuditLog(repo);
   const tools = new ToolRegistry();
   const engine = new WorkflowEngine(audit, repo, tools);
-  const interpreter = new GeminiRiskInterpreter();
-  const complianceInterpreter = new GeminiComplianceInterpreter();
-  const financeInterpreter = new GeminiFinanceInterpreter();
-  const followUpDraftClient = new GeminiFollowUpDraftClient();
+  // These run server-side (Vercel Node.js runtime, not a browser), so a
+  // relative endpoint like '/api/ai-brain/interpret-field-update' has no
+  // page to resolve against and fails immediately. VERCEL_URL is injected
+  // automatically by Vercel at runtime (host only, no protocol).
+  const absoluteHost = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined;
+  const interpreter = new GeminiRiskInterpreter(absoluteHost ? `${absoluteHost}/api/ai-brain/interpret-field-update` : undefined);
+  const complianceInterpreter = new GeminiComplianceInterpreter(absoluteHost ? `${absoluteHost}/api/ai-brain/interpret-compliance-finding` : undefined);
+  const financeInterpreter = new GeminiFinanceInterpreter(absoluteHost ? `${absoluteHost}/api/ai-brain/interpret-finance-finding` : undefined);
+  const followUpDraftClient = new GeminiFollowUpDraftClient(absoluteHost ? `${absoluteHost}/api/ai-brain/draft-lead-followup` : undefined);
 
   const now = new Date();
   const asOfDate = tomorrowDateString(now);

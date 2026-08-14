@@ -25,8 +25,18 @@ import { DeterministicRiskInterpreter, GeminiRiskInterpreter } from '../../src/l
 import { DeterministicDraftClient, GeminiDraftClient } from '../../src/lib/aiBrain/domains/customerSuccess/draftClient.js';
 import { DeterministicFollowUpDraftClient, GeminiFollowUpDraftClient } from '../../src/lib/aiBrain/domains/sales/followUpDraftClient.js';
 
+// These functions run server-side (Vercel Node.js runtime), not in a
+// browser, so a relative endpoint like '/api/ai-brain/interpret-field-update'
+// has no page to resolve against and fails immediately. VERCEL_URL is
+// injected automatically by Vercel at runtime (host only, no protocol).
+function absoluteEndpoint(path: string): string | undefined {
+  const host = process.env.VERCEL_URL;
+  return host ? `https://${host}${path}` : undefined;
+}
+
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
+  console.log('[decide-approval] start');
 
   const supabaseUrl = process.env.SUPABASE_URL;
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -53,22 +63,29 @@ export default async function handler(req: Request): Promise<Response> {
   const tools = new ToolRegistry();
   const engine = new WorkflowEngine(audit, repo, tools);
 
+  console.log('[decide-approval] deciding approval...');
   const decided = await audit.decideApproval(body.approvalId, body.decision, body.approverUserId);
 
   const run = await audit.getWorkflowRun(decided.workflowRunId);
   if (!run) return json({ error: `workflow run ${decided.workflowRunId} not found` }, 404);
+  console.log('[decide-approval] resuming SOP:', run.sopId);
 
-  const geminiInterpreter = new GeminiRiskInterpreter();
   const HANDLERS: Record<string, SopHandler> = {
     task_delay_cascade_v1: taskDelayCascadeHandler,
     trade_material_coordination_v1: createTradeMaterialCoordinationHandler(
-      process.env.GEMINI_API_KEY ? geminiInterpreter : new DeterministicRiskInterpreter()
+      process.env.GEMINI_API_KEY
+        ? new GeminiRiskInterpreter(absoluteEndpoint('/api/ai-brain/interpret-field-update'))
+        : new DeterministicRiskInterpreter()
     ),
     client_communication_draft_v1: createClientCommunicationDraftHandler(
-      process.env.GEMINI_API_KEY ? new GeminiDraftClient() : new DeterministicDraftClient()
+      process.env.GEMINI_API_KEY
+        ? new GeminiDraftClient(absoluteEndpoint('/api/ai-brain/draft-client-communication'))
+        : new DeterministicDraftClient()
     ),
     sales_pipeline_hygiene_v1: createSalesPipelineHygieneHandler(
-      process.env.GEMINI_API_KEY ? new GeminiFollowUpDraftClient() : new DeterministicFollowUpDraftClient()
+      process.env.GEMINI_API_KEY
+        ? new GeminiFollowUpDraftClient(absoluteEndpoint('/api/ai-brain/draft-lead-followup'))
+        : new DeterministicFollowUpDraftClient()
     ),
   };
   const sopHandler = HANDLERS[run.sopId];
@@ -80,6 +97,7 @@ export default async function handler(req: Request): Promise<Response> {
   if (!triggerEvent) return json({ error: `trigger event ${run.triggerEventId} not found` }, 404);
 
   const result = await engine.resume({ companyId: run.companyId, projectId: run.projectId, correlationId: run.correlationId }, run.id, triggerEvent, sopHandler);
+  console.log('[decide-approval] resume complete, status:', result.run.status);
 
   return json({ decided, resumed: true, workflowRunStatus: result.run.status });
 }

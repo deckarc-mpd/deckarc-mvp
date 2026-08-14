@@ -20,8 +20,18 @@ import { createEstimatePricingRecommendationHandler, type EstimatePricingRecomme
 import { DeterministicScopeInterpreter, GeminiScopeInterpreter } from '../../src/lib/aiBrain/domains/estimating/scopeInterpreter.js';
 import type { ScopeNormalizationResult, PricingRecommendation } from '../../src/lib/aiBrain/domains/estimating/types.js';
 
+// This function runs server-side (Vercel Node.js runtime), not in a
+// browser, so a relative endpoint like '/api/ai-brain/normalize-project-scope'
+// has no page to resolve against and fails immediately. VERCEL_URL is
+// injected automatically by Vercel at runtime (host only, no protocol).
+function absoluteEndpoint(path: string): string | undefined {
+  const host = process.env.VERCEL_URL;
+  return host ? `https://${host}${path}` : undefined;
+}
+
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
+  console.log('[run-estimate] start');
 
   const supabaseUrl = process.env.SUPABASE_URL;
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -40,21 +50,35 @@ export default async function handler(req: Request): Promise<Response> {
 
   const supabase = createClient(supabaseUrl, serviceRoleKey);
 
-  const { data: completedProjects } = await supabase
+  console.log('[run-estimate] querying completed projects...');
+  const { data: completedProjects, error: projectsError } = await supabase
     .from('projects')
     .select('id, project_type, status, contract_amount')
     .eq('organization_id', body.organizationId)
     .eq('status', 'Completed');
+  if (projectsError) {
+    console.log('[run-estimate] projects query error:', projectsError.message);
+    return json({ error: `Failed to load completed projects: ${projectsError.message}` }, 502);
+  }
+  console.log('[run-estimate] completed projects:', completedProjects?.length ?? 0);
+
   const projectIds = (completedProjects ?? []).map((p) => p.id);
-  const { data: costEntries } = projectIds.length
+  const { data: costEntries, error: costEntriesError } = projectIds.length
     ? await supabase.from('project_cost_entries').select('id, project_id, category, amount, source').in('project_id', projectIds)
-    : { data: [] };
+    : { data: [], error: null };
+  if (costEntriesError) {
+    console.log('[run-estimate] cost entries query error:', costEntriesError.message);
+    return json({ error: `Failed to load cost entries: ${costEntriesError.message}` }, 502);
+  }
+  console.log('[run-estimate] cost entries:', costEntries?.length ?? 0);
 
   const repo = createSupabaseRepository(supabase);
   const audit = new AuditLog(repo);
   const tools = new ToolRegistry();
   const engine = new WorkflowEngine(audit, repo, tools);
-  const interpreter = process.env.GEMINI_API_KEY ? new GeminiScopeInterpreter() : new DeterministicScopeInterpreter();
+  const interpreter = process.env.GEMINI_API_KEY
+    ? new GeminiScopeInterpreter(absoluteEndpoint('/api/ai-brain/normalize-project-scope'))
+    : new DeterministicScopeInterpreter();
   const sopHandler = createEstimatePricingRecommendationHandler(interpreter);
 
   const ctx = { companyId: body.organizationId, projectId: null, correlationId: crypto.randomUUID() };
@@ -63,12 +87,16 @@ export default async function handler(req: Request): Promise<Response> {
     completedProjects: (completedProjects ?? []) as EstimatePricingRecommendationPayload['completedProjects'],
     costEntries: (costEntries ?? []) as EstimatePricingRecommendationPayload['costEntries'],
   };
+  console.log('[run-estimate] emitting trigger event...');
   const event = await emitScheduleEvent(audit, ctx, 'schedule.estimate_pricing_recommendation', payload as unknown as Record<string, unknown>);
+  console.log('[run-estimate] running SOP...');
   const { run } = await engine.run(ctx, 'estimate_pricing_recommendation_v1', '1.0.0', event, sopHandler);
+  console.log('[run-estimate] SOP run complete, status:', run.status);
 
   const calls = await repo.listToolCallsByWorkflowRun(run.id);
   const normalized = calls.find((c) => c.toolName === 'normalize_project_scope')?.result as ScopeNormalizationResult | undefined;
   const pricing = calls.find((c) => c.toolName === 'find_comparable_pricing')?.result as PricingRecommendation | undefined;
+  console.log('[run-estimate] done');
 
   return json({ workflowRunId: run.id, status: run.status, normalized, pricing });
 }

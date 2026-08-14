@@ -18,8 +18,18 @@ import { createClientCommunicationDraftHandler, type ClientCommunicationDraftPay
 import { DeterministicDraftClient, GeminiDraftClient } from '../../src/lib/aiBrain/domains/customerSuccess/draftClient.js';
 import type { ClientCommunicationDraft, VerifiedClientFacts } from '../../src/lib/aiBrain/domains/customerSuccess/types.js';
 
+// This function runs server-side (Vercel Node.js runtime), not in a
+// browser, so a relative endpoint like '/api/ai-brain/draft-client-communication'
+// has no page to resolve against and fails immediately. VERCEL_URL is
+// injected automatically by Vercel at runtime (host only, no protocol).
+function absoluteEndpoint(path: string): string | undefined {
+  const host = process.env.VERCEL_URL;
+  return host ? `https://${host}${path}` : undefined;
+}
+
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
+  console.log('[run-client-communication] start');
 
   const supabaseUrl = process.env.SUPABASE_URL;
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -37,13 +47,19 @@ export default async function handler(req: Request): Promise<Response> {
 
   const supabase = createClient(supabaseUrl, serviceRoleKey);
 
+  console.log('[run-client-communication] querying project...');
   const { data: project, error: projectError } = await supabase
     .from('projects')
     .select('id, organization_id')
     .eq('id', body.projectId)
     .maybeSingle();
-  if (projectError || !project) return json({ error: 'Project not found.' }, 404);
+  if (projectError) {
+    console.log('[run-client-communication] project query error:', projectError.message);
+    return json({ error: `Failed to load project: ${projectError.message}` }, 502);
+  }
+  if (!project) return json({ error: 'Project not found.' }, 404);
 
+  console.log('[run-client-communication] querying decisions/delay reasons...');
   const [{ data: decisions }, { data: delayReasons }] = await Promise.all([
     supabase.from('client_decisions')
       .select('id, project_id, decision_title, needed_by_date, status')
@@ -52,12 +68,15 @@ export default async function handler(req: Request): Promise<Response> {
       .select('id, project_id, delay_category, client_safe_reason, revised_projected_completion, client_visible')
       .eq('project_id', project.id),
   ]);
+  console.log('[run-client-communication] queries done');
 
   const repo = createSupabaseRepository(supabase);
   const audit = new AuditLog(repo);
   const tools = new ToolRegistry();
   const engine = new WorkflowEngine(audit, repo, tools);
-  const draftClient = process.env.GEMINI_API_KEY ? new GeminiDraftClient() : new DeterministicDraftClient();
+  const draftClient = process.env.GEMINI_API_KEY
+    ? new GeminiDraftClient(absoluteEndpoint('/api/ai-brain/draft-client-communication'))
+    : new DeterministicDraftClient();
   const sopHandler = createClientCommunicationDraftHandler(draftClient);
 
   const asOfDate = new Date().toISOString().split('T')[0];
@@ -68,13 +87,16 @@ export default async function handler(req: Request): Promise<Response> {
     decisions: (decisions ?? []) as ClientCommunicationDraftPayload['decisions'],
     delayReasons: (delayReasons ?? []) as ClientCommunicationDraftPayload['delayReasons'],
   };
+  console.log('[run-client-communication] running SOP...');
   const event = await emitScheduleEvent(audit, ctx, 'schedule.client_communication_check', payload as unknown as Record<string, unknown>);
   const { run } = await engine.run(ctx, 'client_communication_draft_v1', '1.0.0', event, sopHandler);
+  console.log('[run-client-communication] SOP run complete, status:', run.status);
 
   const calls = await repo.listToolCallsByWorkflowRun(run.id);
   const facts = calls.find((c) => c.toolName === 'gather_verified_client_facts')?.result as VerifiedClientFacts | undefined;
   const drafts = (calls.find((c) => c.toolName === 'draft_client_communication')?.result ?? []) as ClientCommunicationDraft[];
   const [approval] = await repo.listApprovalsByWorkflowRun(run.id);
+  console.log('[run-client-communication] done');
 
   return json({
     workflowRunId: run.id,
