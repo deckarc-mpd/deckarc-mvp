@@ -13,17 +13,17 @@
 // sandbox.
 
 import { createClient } from '@supabase/supabase-js';
-import { createSupabaseRepository } from '../../src/lib/aiBrain/supabaseRepository';
-import { AuditLog } from '../../src/lib/aiBrain/audit';
-import { WorkflowEngine, type SopHandler } from '../../src/lib/aiBrain/workflow';
-import { ToolRegistry } from '../../src/lib/aiBrain/tools';
-import { taskDelayCascadeHandler } from '../../src/lib/aiBrain/sops/taskDelayCascade';
-import { createTradeMaterialCoordinationHandler } from '../../src/lib/aiBrain/sops/tradeMaterialCoordination';
-import { createClientCommunicationDraftHandler } from '../../src/lib/aiBrain/sops/clientCommunicationDraft';
-import { createSalesPipelineHygieneHandler } from '../../src/lib/aiBrain/sops/salesPipelineHygiene';
-import { DeterministicRiskInterpreter, GeminiRiskInterpreter } from '../../src/lib/aiBrain/domains/projectOps/aiInterpreter';
-import { DeterministicDraftClient, GeminiDraftClient } from '../../src/lib/aiBrain/domains/customerSuccess/draftClient';
-import { DeterministicFollowUpDraftClient, GeminiFollowUpDraftClient } from '../../src/lib/aiBrain/domains/sales/followUpDraftClient';
+import { createSupabaseRepository } from '../../src/lib/aiBrain/supabaseRepository.js';
+import { AuditLog } from '../../src/lib/aiBrain/audit.js';
+import { WorkflowEngine, type SopHandler } from '../../src/lib/aiBrain/workflow.js';
+import { ToolRegistry } from '../../src/lib/aiBrain/tools.js';
+import { taskDelayCascadeHandler } from '../../src/lib/aiBrain/sops/taskDelayCascade.js';
+import { createTradeMaterialCoordinationHandler } from '../../src/lib/aiBrain/sops/tradeMaterialCoordination.js';
+import { createClientCommunicationDraftHandler } from '../../src/lib/aiBrain/sops/clientCommunicationDraft.js';
+import { createSalesPipelineHygieneHandler } from '../../src/lib/aiBrain/sops/salesPipelineHygiene.js';
+import { DeterministicRiskInterpreter, GeminiRiskInterpreter } from '../../src/lib/aiBrain/domains/projectOps/aiInterpreter.js';
+import { DeterministicDraftClient, GeminiDraftClient } from '../../src/lib/aiBrain/domains/customerSuccess/draftClient.js';
+import { DeterministicFollowUpDraftClient, GeminiFollowUpDraftClient } from '../../src/lib/aiBrain/domains/sales/followUpDraftClient.js';
 
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405);

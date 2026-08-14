@@ -9,14 +9,14 @@
 // sandbox — see api/cron/scheduled-sweep.ts's header for the same caveat.
 
 import { createClient } from '@supabase/supabase-js';
-import { createSupabaseRepository } from '../../src/lib/aiBrain/supabaseRepository';
-import { AuditLog } from '../../src/lib/aiBrain/audit';
-import { WorkflowEngine } from '../../src/lib/aiBrain/workflow';
-import { ToolRegistry } from '../../src/lib/aiBrain/tools';
-import { emitScheduleEvent } from '../../src/lib/aiBrain/events';
-import { createSalesPipelineHygieneHandler, type SalesPipelineHygienePayload } from '../../src/lib/aiBrain/sops/salesPipelineHygiene';
-import { DeterministicFollowUpDraftClient, GeminiFollowUpDraftClient } from '../../src/lib/aiBrain/domains/sales/followUpDraftClient';
-import type { StaleLeadFinding, LeadFollowUpDraft, ReadinessLead } from '../../src/lib/aiBrain/domains/sales/types';
+import { createSupabaseRepository } from '../../src/lib/aiBrain/supabaseRepository.js';
+import { AuditLog } from '../../src/lib/aiBrain/audit.js';
+import { WorkflowEngine } from '../../src/lib/aiBrain/workflow.js';
+import { ToolRegistry } from '../../src/lib/aiBrain/tools.js';
+import { emitScheduleEvent } from '../../src/lib/aiBrain/events.js';
+import { createSalesPipelineHygieneHandler, type SalesPipelineHygienePayload } from '../../src/lib/aiBrain/sops/salesPipelineHygiene.js';
+import { DeterministicFollowUpDraftClient, GeminiFollowUpDraftClient } from '../../src/lib/aiBrain/domains/sales/followUpDraftClient.js';
+import type { StaleLeadFinding, LeadFollowUpDraft, ReadinessLead } from '../../src/lib/aiBrain/domains/sales/types.js';
 
 const PLATFORM_OWNER_ORG_ID = '00000000-0000-0000-0000-000000000001'; // CONVAZANT INC — see scheduled-sweep.ts's header.
 

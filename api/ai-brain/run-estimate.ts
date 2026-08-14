@@ -11,14 +11,14 @@
 // the domain's comparableHistory.ts is designed to do.
 
 import { createClient } from '@supabase/supabase-js';
-import { createSupabaseRepository } from '../../src/lib/aiBrain/supabaseRepository';
-import { AuditLog } from '../../src/lib/aiBrain/audit';
-import { WorkflowEngine } from '../../src/lib/aiBrain/workflow';
-import { ToolRegistry } from '../../src/lib/aiBrain/tools';
-import { emitScheduleEvent } from '../../src/lib/aiBrain/events';
-import { createEstimatePricingRecommendationHandler, type EstimatePricingRecommendationPayload } from '../../src/lib/aiBrain/sops/estimatePricingRecommendation';
-import { DeterministicScopeInterpreter, GeminiScopeInterpreter } from '../../src/lib/aiBrain/domains/estimating/scopeInterpreter';
-import type { ScopeNormalizationResult, PricingRecommendation } from '../../src/lib/aiBrain/domains/estimating/types';
+import { createSupabaseRepository } from '../../src/lib/aiBrain/supabaseRepository.js';
+import { AuditLog } from '../../src/lib/aiBrain/audit.js';
+import { WorkflowEngine } from '../../src/lib/aiBrain/workflow.js';
+import { ToolRegistry } from '../../src/lib/aiBrain/tools.js';
+import { emitScheduleEvent } from '../../src/lib/aiBrain/events.js';
+import { createEstimatePricingRecommendationHandler, type EstimatePricingRecommendationPayload } from '../../src/lib/aiBrain/sops/estimatePricingRecommendation.js';
+import { DeterministicScopeInterpreter, GeminiScopeInterpreter } from '../../src/lib/aiBrain/domains/estimating/scopeInterpreter.js';
+import type { ScopeNormalizationResult, PricingRecommendation } from '../../src/lib/aiBrain/domains/estimating/types.js';
 
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== 'POST') return json({ error: 'Method not allowed' }, 405);
