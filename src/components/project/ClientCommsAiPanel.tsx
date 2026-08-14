@@ -45,8 +45,8 @@ export default function ClientCommsAiPanel({ projectId }: { projectId: string })
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ projectId }),
       });
-      if (!res.ok) throw new Error(`Request failed (${res.status})`);
-      const data = await res.json();
+      const data = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(data?.error || `Request failed (${res.status})`);
       setStatus(data.status);
       setCandidateCount(data.candidateCount ?? 0);
       setDrafts(data.drafts ?? []);

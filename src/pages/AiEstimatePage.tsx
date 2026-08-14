@@ -56,8 +56,8 @@ export default function AiEstimatePage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ scopeText: scopeText.trim(), organizationId: profile.organization_id }),
       });
-      if (!res.ok) throw new Error(`Request failed (${res.status})`);
-      const data = await res.json();
+      const data = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(data?.error || `Request failed (${res.status})`);
       setNormalized(data.normalized ?? null);
       setPricing(data.pricing ?? null);
     } catch (e) {

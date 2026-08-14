@@ -47,8 +47,8 @@ export default function SalesPipelineHygienePanel() {
     setDecision(null);
     try {
       const res = await fetch('/api/ai-brain/run-sales-hygiene', { method: 'POST', headers: { 'Content-Type': 'application/json' } });
-      if (!res.ok) throw new Error(`Request failed (${res.status})`);
-      const data = await res.json();
+      const data = await res.json().catch(() => null);
+      if (!res.ok) throw new Error(data?.error || `Request failed (${res.status})`);
       setStaleFindings(data.staleFindings ?? []);
       setDrafts(data.drafts ?? []);
       setApprovalId(data.approvalId ?? null);
